@@ -4,225 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Encaminhamentos - ESF CDI 2</title>
-<<<<<<< HEAD
-    <style>
-        :root {
-            --primary-color: #005A9C; /* Azul Saúde */
-            --secondary-color: #2E8B57; /* Verde Saúde */
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-        }
-
-        /* ESTILOS DA TELA (Interface de Preenchimento) */
-        .screen-container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-
-        .header-app {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-        }
-
-        .forms-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-top: 5px solid var(--secondary-color);
-        }
-
-        .form-card h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-        }
-
-        .row {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .row .input-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        input, select, textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .btn-print {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-print:hover {
-            background-color: #00447a;
-        }
-
-        /* ESTILOS DE IMPRESSÃO (Oculto na tela, ativo no PDF) */
-        .print-container {
-            display: none;
-        }
-
-        @media print {
-            @page {
-                size: A4 landscape;
-                margin: 5mm;
-            }
-
-            body {
-                background: white;
-            }
-
-            .screen-container {
-                display: none !important;
-            }
-
-            .print-container {
-                display: flex !important;
-                flex-direction: row;
-                justify-content: space-between;
-                width: 100%;
-                height: 95vh;
-                gap: 10mm;
-            }
-
-            .referral-half {
-                width: 48%;
-                height: 100%;
-                border: 2px solid #2E8B57;
-                border-radius: 10px;
-                padding: 15px;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                position: relative;
-            }
-
-            .print-header {
-                text-align: center;
-                font-size: 14px;
-                font-weight: bold;
-                text-transform: uppercase;
-                border-bottom: 2px solid #005A9C;
-                padding-bottom: 10px;
-                margin-bottom: 15px;
-            }
-
-            .print-header span {
-                display: block;
-                line-height: 1.4;
-            }
-
-            .print-type {
-                text-align: center;
-                font-size: 16px;
-                font-weight: bold;
-                margin-bottom: 15px;
-                background-color: #eee;
-                padding: 5px;
-                border-radius: 4px;
-            }
-
-            .print-field {
-                margin-bottom: 8px;
-                font-size: 13px;
-                line-height: 1.5;
-            }
-
-            .print-field strong {
-                color: #000;
-            }
-
-            .print-description {
-                flex-grow: 1;
-                border: 1px solid #ccc;
-                border-radius: 6px;
-                padding: 10px;
-                margin-top: 10px;
-                font-size: 13px;
-            }
-
-            .print-footer {
-                margin-top: 30px;
-                text-align: center;
-                font-size: 12px;
-            }
-
-            .signature-line {
-                width: 70%;
-                border-top: 1px solid #000;
-                margin: 0 auto 5px auto;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="screen-container">
-        <div class="header-app">
-            <h1>Gerador de Documentos Clínicos</h1>
-=======
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="../assets/css/encaminhamento.css">
     <script src="../assets/js/encaminhamento.js" defer></script>
@@ -239,7 +20,6 @@
     <div class="screen-container">
         <div class="header-app">
             <h2>Gerador de Documentos Clínicos</h2>
->>>>>>> 53ae999 (Primeiro commit do projeto)
             <p>Preencha os dados abaixo. Eles serão divididos em 2 encaminhamentos na folha A4 (Paisagem).</p>
         </div>
 
@@ -333,11 +113,7 @@
             </div>
         </div>
 
-<<<<<<< HEAD
-        <button class="btn-print" onclick="gerarPDF()">Gerar PDF / Imprimir</button>
-=======
         <button class="btn-print" id="btn-print" type="button">Gerar PDF / Imprimir</button>
->>>>>>> 53ae999 (Primeiro commit do projeto)
     </div>
 
     <div class="print-container">
@@ -355,20 +131,12 @@
             <div class="print-field"><strong>Endereço:</strong> <span id="out-p1-endereco"></span></div>
             <div class="print-field"><strong>Especialidade/Exame:</strong> <span id="out-p1-especialidade"></span></div>
             
-<<<<<<< HEAD
-            <div class="print-field" style="margin-top: 15px;"><strong>Descrição / Motivo Clínico:</strong></div>
-=======
             <div class="print-field print-field-description-label"><strong>Descrição / Motivo Clínico:</strong></div>
->>>>>>> 53ae999 (Primeiro commit do projeto)
             <div class="print-description" id="out-p1-descricao"></div>
 
             <div class="print-footer">
                 <div class="signature-line"></div>
-<<<<<<< HEAD
-                <div style="font-weight: bold; margin-bottom: 5px;" id="out-p1-profissional"></div>
-=======
                 <div class="professional-name" id="out-p1-profissional"></div>
->>>>>>> 53ae999 (Primeiro commit do projeto)
                 <div>Sete Lagoas, <span id="out-p1-data"></span></div>
             </div>
         </div>
@@ -386,66 +154,17 @@
             <div class="print-field"><strong>Endereço:</strong> <span id="out-p2-endereco"></span></div>
             <div class="print-field"><strong>Especialidade/Exame:</strong> <span id="out-p2-especialidade"></span></div>
             
-<<<<<<< HEAD
-            <div class="print-field" style="margin-top: 15px;"><strong>Descrição / Motivo Clínico:</strong></div>
-=======
             <div class="print-field print-field-description-label"><strong>Descrição / Motivo Clínico:</strong></div>
->>>>>>> 53ae999 (Primeiro commit do projeto)
             <div class="print-description" id="out-p2-descricao"></div>
 
             <div class="print-footer">
                 <div class="signature-line"></div>
-<<<<<<< HEAD
-                <div style="font-weight: bold; margin-bottom: 5px;" id="out-p2-profissional"></div>
-=======
                 <div class="professional-name" id="out-p2-profissional"></div>
->>>>>>> 53ae999 (Primeiro commit do projeto)
                 <div>Sete Lagoas, <span id="out-p2-data"></span></div>
             </div>
         </div>
 
     </div>
 
-<<<<<<< HEAD
-    <script>
-        // Preenche automaticamente a data de hoje ao carregar a página
-        document.addEventListener("DOMContentLoaded", () => {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('p1-data').value = today;
-            document.getElementById('p2-data').value = today;
-        });
-
-        // Formata a data de AAAA-MM-DD para DD/MM/AAAA na impressão
-        function formatarData(dataIso) {
-            if(!dataIso) return "";
-            const partes = dataIso.split('-');
-            return `${partes[2]}/${partes[1]}/${partes[0]}`;
-        }
-
-        function gerarPDF() {
-            // Sincroniza dados do Paciente 1
-            document.getElementById('out-p1-nome').innerText = document.getElementById('p1-nome').value;
-            document.getElementById('out-p1-endereco').innerText = document.getElementById('p1-endereco').value;
-            document.getElementById('out-p1-tipo').innerText = document.getElementById('p1-tipo').value;
-            document.getElementById('out-p1-especialidade').innerText = document.getElementById('p1-especialidade').value;
-            document.getElementById('out-p1-descricao').innerText = document.getElementById('p1-descricao').value;
-            document.getElementById('out-p1-profissional').innerText = document.getElementById('p1-profissional').value;
-            document.getElementById('out-p1-data').innerText = formatarData(document.getElementById('p1-data').value);
-
-            // Sincroniza dados do Paciente 2
-            document.getElementById('out-p2-nome').innerText = document.getElementById('p2-nome').value;
-            document.getElementById('out-p2-endereco').innerText = document.getElementById('p2-endereco').value;
-            document.getElementById('out-p2-tipo').innerText = document.getElementById('p2-tipo').value;
-            document.getElementById('out-p2-especialidade').innerText = document.getElementById('p2-especialidade').value;
-            document.getElementById('out-p2-descricao').innerText = document.getElementById('p2-descricao').value;
-            document.getElementById('out-p2-profissional').innerText = document.getElementById('p2-profissional').value;
-            document.getElementById('out-p2-data').innerText = formatarData(document.getElementById('p2-data').value);
-
-            // Aciona a caixa de diálogo de impressão/PDF do navegador
-            window.print();
-        }
-    </script>
-=======
->>>>>>> 53ae999 (Primeiro commit do projeto)
 </body>
 </html>

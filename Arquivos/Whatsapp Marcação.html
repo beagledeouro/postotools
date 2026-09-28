@@ -3,119 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Gerador de Lembrete de Consulta</title>
-    <style>
-        :root {
-            --primary: #0284c7; /* Azul médico */
-            --primary-hover: #0369a1;
-            --background: #f0f9ff;
-            --card-bg: #ffffff;
-            --text: #334155;
-        }
-
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-        }
-
-        h2 {
-            margin-top: 0;
-            color: var(--primary);
-            text-align: center;
-            border-bottom: 2px solid #e0f2fe;
-            padding-bottom: 10px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text);
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: 1rem;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
-        }
-
-        .preview-container {
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8fafc;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-
-        canvas {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        button {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            background-color: var(--primary-hover);
-        }
-    </style>
-</head>
-<body>
-
-=======
     <title>ESF CDI 2 — Lembrete de Consulta</title>
     <link rel="stylesheet" href="../assets/css/common.css">
     <link rel="stylesheet" href="../assets/css/whatsapp-marcacao.css">
@@ -130,7 +17,6 @@
     </div>
 </header>
 
->>>>>>> 53ae999 (Primeiro commit do projeto)
 <div class="container">
     <h2>Gerar Lembrete de Consulta</h2>
     
@@ -157,115 +43,12 @@
     </div>
 
     <div class="preview-container">
-<<<<<<< HEAD
-        <label style="display: block; margin-bottom: 10px; color: #64748b; font-size: 0.85rem;">Pré-visualização do Cartão:</label>
-=======
         <label class="preview-label">Pré-visualização do Cartão:</label>
->>>>>>> 53ae999 (Primeiro commit do projeto)
         <canvas id="cartaoCanvas" width="600" height="350"></canvas>
     </div>
 
     <button id="downloadBtn">Baixar Lembrete (PNG)</button>
 </div>
 
-<<<<<<< HEAD
-<script>
-    const canvas = document.getElementById('cartaoCanvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Inputs
-    const inputPaciente = document.getElementById('paciente');
-    const inputData = document.getElementById('data');
-    const inputHorario = document.getElementById('horario');
-    const inputEspecialidade = document.getElementById('especialidade');
-    const downloadBtn = document.getElementById('downloadBtn');
-
-    // Função para formatar a data de AAAA-MM-DD para DD/MM/AAAA
-    function formatarData(dataISO) {
-        if (!dataISO) return '';
-        const partes = dataISO.split('-');
-        return `${partes[2]}/${partes[1]}/${partes[0]}`;
-    }
-
-    // Função para desenhar o cartão
-    function desenharCartao() {
-        // Pega os valores
-        const paciente = inputPaciente.value || '[Nome do Paciente]';
-        const dataOriginal = inputData.value;
-        const data = formatarData(dataOriginal) || '[Data]';
-        const horario = inputHorario.value || '[Horário]';
-        const especialidade = inputEspecialidade.value || '[Especialidade]';
-
-        // 1. Fundo do cartão (Branco)
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // 2. Cabeçalho (Azul)
-        ctx.fillStyle = '#0284c7';
-        ctx.fillRect(0, 0, canvas.width, 80);
-
-        // 3. Texto do Cabeçalho
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 32px "Segoe UI", Arial, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('LEMBRETE DE CONSULTA', canvas.width / 2, 40);
-
-        // 4. Configurações de texto para os dados (Alinhado à esquerda)
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'top';
-        const margemX = 40;
-        let margemY = 110;
-        const espacoLinha = 50;
-
-        // Função auxiliar para desenhar o título e o valor
-        function escreverLinha(titulo, valor, y) {
-            ctx.fillStyle = '#64748b'; // Cor mais clara pro título
-            ctx.font = 'bold 20px "Segoe UI", Arial, sans-serif';
-            ctx.fillText(titulo, margemX, y);
-            
-            ctx.fillStyle = '#0f172a'; // Cor escura pro valor
-            ctx.font = '24px "Segoe UI", Arial, sans-serif';
-            // Desenha o valor logo após o título (adicionando um recuo de 160px para alinhar)
-            ctx.fillText(valor, margemX + 160, y - 2); 
-        }
-
-        // Escreve as informações
-        escreverLinha('Paciente:', paciente, margemY);
-        escreverLinha('Data:', data, margemY + espacoLinha);
-        escreverLinha('Horário:', horario, margemY + espacoLinha * 2);
-        escreverLinha('Especialidade:', especialidade, margemY + espacoLinha * 3);
-
-        // 5. Rodapé discreto
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = 'italic 16px "Segoe UI", Arial, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('Por favor, chegue com 15 minutos de antecedência.', canvas.width / 2, 310);
-    }
-
-    // Função de Download
-    function baixarImagem() {
-        const link = document.createElement('a');
-        let nomeArquivo = inputPaciente.value ? `consulta-${inputPaciente.value.toLowerCase().replace(/ /g, '-')}` : 'consulta';
-        link.download = `${nomeArquivo}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    }
-
-    // Adiciona os eventos para atualizar o canvas em tempo real
-    inputPaciente.addEventListener('input', desenharCartao);
-    inputData.addEventListener('input', desenharCartao);
-    inputHorario.addEventListener('input', desenharCartao);
-    inputEspecialidade.addEventListener('input', desenharCartao);
-    
-    // Evento do botão
-    downloadBtn.addEventListener('click', baixarImagem);
-
-    // Desenha o cartão inicial ao carregar a página
-    desenharCartao();
-</script>
-
-=======
->>>>>>> 53ae999 (Primeiro commit do projeto)
 </body>
 </html>

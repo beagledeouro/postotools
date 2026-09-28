@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Gerador de Capa G-MUS",
+  "version": "1.0",
+  "description": "Extrai dados do G-MUS e preenche a capa de prontuário.",
+  "permissions": ["activeTab", "scripting", "downloads"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Gerar Capa"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["capa_de_prontuario.pdf"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

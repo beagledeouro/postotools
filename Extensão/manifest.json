@@ -1,16 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Gerador de Capa G-MUS",
-  "version": "1.0",
-  "description": "Extrai dados do G-MUS e preenche a capa de prontuário.",
+  "version": "1.1",
+  "description": "Extrai dados do G-MUS e gera capas de prontuário, capa gestante e declaração de comparecimento.",
   "permissions": ["activeTab", "scripting", "downloads"],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Gerar Capa"
+    "default_title": "Gerar documento do G-MUS"
   },
   "web_accessible_resources": [
     {
-      "resources": ["capa_de_prontuario.pdf"],
+      "resources": ["Capa.pdf", "Capa_Gestante.pdf"],
       "matches": ["<all_urls>"]
     }
   ]

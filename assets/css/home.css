@@ -1,0 +1,14 @@
+body { font-family: Roboto, "Segoe UI", sans-serif; display: flex; flex-direction: column; align-items: center; }
+.app-bar { width: 100%; padding: 20px; color: #fff; background: linear-gradient(120deg, #076b76, #0b8990); text-align: center; }
+.app-bar h1 { margin: 0; font-size: clamp(1.35rem, 4vw, 1.8rem); font-weight: 600; }
+.container { width: min(1200px, 100%); padding: clamp(16px, 4vw, 32px); display: flex; flex-direction: column; align-items: center; }
+.pesquisa { width: min(600px, 100%); margin: 12px 0 32px; padding: 7px 12px 7px 20px; background: var(--surface); border-radius: 999px; box-shadow: var(--shadow); }
+.pesquisa form { display: flex; align-items: center; gap: 10px; width: 100%; }
+.pesquisa .search-icon { color: var(--muted); }
+.pesquisa input { flex: 1; border: 0; outline: 0; padding: 10px 0; background: transparent; }
+.pesquisa button { width: 44px; min-width: 44px; border: 0; border-radius: 50%; color: var(--brand); background: transparent; }
+.content { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 18px; width: 100%; }
+.content a { min-height: 116px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); color: var(--brand-dark); text-align: center; text-decoration: none; font-weight: 600; transition: transform .18s, background-color .18s, color .18s; }
+.content a .material-icons { font-size: 34px; }
+.content a:hover { transform: translateY(-2px); color: #fff; background: var(--brand); }
+@media (max-width: 560px) { .content { grid-template-columns: 1fr; } }

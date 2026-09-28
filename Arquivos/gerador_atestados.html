@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Gerador de Atestados e Declarações - ESF Itapuã</title>
     <style>
         :root {
@@ -367,10 +368,99 @@
                                     <input type="checkbox" id="autorizaCid">
                                     <label for="autorizaCid" style="margin-bottom:0; cursor:pointer;">Paciente autoriza menção do CID</label>
                                 </div>
+=======
+    <title>Gerador de Atestados e Declarações - ESF CDI 2</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/atestados.css">
+    <script src="../assets/js/atestados.js" defer></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="app-header-inner">
+            <h1>ESF CDI 2 — Atestados e Declarações</h1>
+            <a class="home-link" href="../index.html">← Início</a>
+        </div>
+    </header>
+
+    <main class="no-print">
+        <h2>Emissor de Atestados e Declarações</h2>
+        <form id="docForm">
+            <div class="row">
+                <div class="col form-group">
+                    <label for="tipoDoc">Tipo de Documento:</label>
+                    <select id="tipoDoc">
+                        <option value="atestado">Atestado Médico</option>
+                        <option value="declaracao">Declaração de Comparecimento</option>
+                    </select>
+                </div>
+                <div class="col form-group">
+                    <label for="unidade">Unidade de Saúde:</label>
+                    <input type="text" id="unidade" value="ESF CDI 2" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col form-group">
+                    <label for="nome">Nome do Paciente:</label>
+                    <input type="text" id="nome" placeholder="Nome completo" required>
+                </div>
+                <div class="col form-group">
+                    <label for="nascimento">Data de Nascimento:</label>
+                    <input type="date" id="nascimento" required>
+                </div>
+            </div>
+            <div class="row" id="divCpf">
+                <div class="col form-group">
+                    <label for="cpf">CPF do Paciente:</label>
+                    <input type="text" id="cpf" placeholder="000.000.000-00" required>
+                </div>
+                <div class="col form-group">
+                    <label for="dataDoc">Data do Atendimento/Emissão:</label>
+                    <input type="date" id="dataDoc" required>
+                </div>
+            </div>
+
+            <section id="secaoAtestado" class="conditional-section">
+                <h3>Configurações do Atestado Médico</h3>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="qtdDias">Quantidade de Dias de Afastamento:</label>
+                        <input type="number" id="qtdDias" min="1" value="1">
+                    </div>
+                    <div class="col form-group">
+                        <label for="inicioAfastamento">A partir de:</label>
+                        <input type="date" id="inicioAfastamento">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="medicoNome">Nome do Médico:</label>
+                        <input type="text" id="medicoNome" placeholder="Dr(a). Nome do Médico">
+                    </div>
+                    <div class="col form-group">
+                        <label for="medicoCrm">CRM:</label>
+                        <input type="text" id="medicoCrm" placeholder="CRM-MG 00000">
+                    </div>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="exibirCid">
+                    <label for="exibirCid">Incluir CID no atestado</label>
+                </div>
+                <div id="divCidCampos" class="cid-fields">
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="codigoCid">Código CID:</label>
+                            <input type="text" id="codigoCid" placeholder="Ex: Z00.0">
+                        </div>
+                        <div class="col form-group cid-consent">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="autorizaCid">
+                                <label for="autorizaCid">Paciente autoriza menção do CID</label>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
                             </div>
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
             </div>
 
             <!-- SEÇÃO ESPECÍFICA: DECLARAÇÃO -->
@@ -525,5 +615,30 @@
             mudarTipoDoc();
         }
     </script>
+=======
+            </section>
+
+            <section id="secaoDeclaracao" class="conditional-section">
+                <h3>Configurações da Declaração de Comparecimento</h3>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="horaInicio">Horário de Entrada:</label>
+                        <input type="time" id="horaInicio" value="08:00">
+                    </div>
+                    <div class="col form-group">
+                        <label for="horaFim">Horário de Saída:</label>
+                        <input type="time" id="horaFim" value="12:00">
+                    </div>
+                </div>
+            </section>
+
+            <div class="btn-container">
+                <button type="submit">Imprimir Documento (2 vias lado a lado)</button>
+                <button type="button" class="secondary" data-action="limpar">Limpar</button>
+            </div>
+        </form>
+    </main>
+    <div id="printArea" class="print-container"></div>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
 </body>
 </html>

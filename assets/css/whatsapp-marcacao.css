@@ -1,0 +1,14 @@
+body { min-height: 100vh; padding: 24px 16px; display: flex; justify-content: center; align-items: flex-start; font-family: "Segoe UI", Roboto, sans-serif; }
+.container { width: min(600px, 100%); padding: clamp(18px, 4vw, 30px); background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); }
+.container h2 { margin: 0 0 20px; padding-bottom: 10px; color: var(--brand-dark); text-align: center; border-bottom: 2px solid var(--brand-soft); }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; margin-bottom: 20px; }
+.form-group { min-width: 0; }
+.form-group.full-width { grid-column: 1 / -1; }
+label { font-size: .92rem; }
+input { width: 100%; padding: 11px; border: 1px solid #bdcbd0; border-radius: 7px; background: #fff; }
+input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(8,126,139,.13); }
+.preview-container { margin-top: 20px; padding: 15px; background: #f5f8f9; border: 1px solid var(--border); border-radius: 8px; text-align: center; }
+.preview-label { display: block; margin-bottom: 10px; color: var(--muted); font-size: .85rem; }
+canvas { width: 100%; height: auto; border-radius: 8px; box-shadow: var(--shadow); }
+#downloadBtn { width: 100%; margin-top: 20px; padding: 13px; color: #fff; background: var(--brand); border: 0; border-radius: 7px; font-weight: 700; font-size: 1.05rem; }
+@media (max-width: 520px) { body { padding: 12px; } .form-grid { grid-template-columns: 1fr; } .form-group.full-width { grid-column: auto; } }

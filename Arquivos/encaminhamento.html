@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Encaminhamentos - ESF CDI 2</title>
+<<<<<<< HEAD
     <style>
         :root {
             --primary-color: #005A9C; /* Azul Saúde */
@@ -221,6 +222,24 @@
     <div class="screen-container">
         <div class="header-app">
             <h1>Gerador de Documentos Clínicos</h1>
+=======
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/encaminhamento.css">
+    <script src="../assets/js/encaminhamento.js" defer></script>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="app-header-inner">
+            <div><h1>ESF CDI 2 — Encaminhamento</h1></div>
+            <a class="home-link" href="../index.html">← Início</a>
+        </div>
+    </header>
+
+    <div class="screen-container">
+        <div class="header-app">
+            <h2>Gerador de Documentos Clínicos</h2>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
             <p>Preencha os dados abaixo. Eles serão divididos em 2 encaminhamentos na folha A4 (Paisagem).</p>
         </div>
 
@@ -314,7 +333,11 @@
             </div>
         </div>
 
+<<<<<<< HEAD
         <button class="btn-print" onclick="gerarPDF()">Gerar PDF / Imprimir</button>
+=======
+        <button class="btn-print" id="btn-print" type="button">Gerar PDF / Imprimir</button>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
     </div>
 
     <div class="print-container">
@@ -332,12 +355,20 @@
             <div class="print-field"><strong>Endereço:</strong> <span id="out-p1-endereco"></span></div>
             <div class="print-field"><strong>Especialidade/Exame:</strong> <span id="out-p1-especialidade"></span></div>
             
+<<<<<<< HEAD
             <div class="print-field" style="margin-top: 15px;"><strong>Descrição / Motivo Clínico:</strong></div>
+=======
+            <div class="print-field print-field-description-label"><strong>Descrição / Motivo Clínico:</strong></div>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
             <div class="print-description" id="out-p1-descricao"></div>
 
             <div class="print-footer">
                 <div class="signature-line"></div>
+<<<<<<< HEAD
                 <div style="font-weight: bold; margin-bottom: 5px;" id="out-p1-profissional"></div>
+=======
+                <div class="professional-name" id="out-p1-profissional"></div>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
                 <div>Sete Lagoas, <span id="out-p1-data"></span></div>
             </div>
         </div>
@@ -355,18 +386,27 @@
             <div class="print-field"><strong>Endereço:</strong> <span id="out-p2-endereco"></span></div>
             <div class="print-field"><strong>Especialidade/Exame:</strong> <span id="out-p2-especialidade"></span></div>
             
+<<<<<<< HEAD
             <div class="print-field" style="margin-top: 15px;"><strong>Descrição / Motivo Clínico:</strong></div>
+=======
+            <div class="print-field print-field-description-label"><strong>Descrição / Motivo Clínico:</strong></div>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
             <div class="print-description" id="out-p2-descricao"></div>
 
             <div class="print-footer">
                 <div class="signature-line"></div>
+<<<<<<< HEAD
                 <div style="font-weight: bold; margin-bottom: 5px;" id="out-p2-profissional"></div>
+=======
+                <div class="professional-name" id="out-p2-profissional"></div>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
                 <div>Sete Lagoas, <span id="out-p2-data"></span></div>
             </div>
         </div>
 
     </div>
 
+<<<<<<< HEAD
     <script>
         // Preenche automaticamente a data de hoje ao carregar a página
         document.addEventListener("DOMContentLoaded", () => {
@@ -405,5 +445,7 @@
             window.print();
         }
     </script>
+=======
+>>>>>>> 53ae999 (Primeiro commit do projeto)
 </body>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emissor de Receitas - ESF CDI 2</title>
+<<<<<<< HEAD
     <style>
         /* ==========================================================================
            VARIÁVEIS E RESETS (UI/UX)
@@ -246,6 +247,21 @@
 </head>
 <body>
 
+=======
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/receita.css">
+</head>
+<body>
+
+    <!-- HEADER DA APLICAÇÃO -->
+    <header class="app-header">
+        <div class="app-header-inner">
+            <h1>ESF CDI 2 — Receituário</h1>
+            <a class="home-link" href="../index.html">← Início</a>
+        </div>
+    </header>
+
+>>>>>>> 53ae999 (Primeiro commit do projeto)
     <!-- INTERFACE DA APLICAÇÃO (TELA) -->
     <div class="app-container">
         
@@ -272,7 +288,11 @@
                         <input type="text" id="cfg-crm" placeholder="Ex: 123456/SP">
                     </div>
                 </div>
+<<<<<<< HEAD
                 <button onclick="salvarConfiguracoes()" style="width: 100%; margin-top: 10px;">💾 Salvar Dados Locais</button>
+=======
+                <button class="save-config" data-action="salvar-configuracoes">💾 Salvar Dados Locais</button>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
             </div>
 
             <!-- Dados do Paciente -->
@@ -299,6 +319,7 @@
         <div class="right-col">
             
             <!-- Gestão de Modelos -->
+<<<<<<< HEAD
             <div class="card" style="background-color: #e0f2fe;">
                 <h2>Carregar Modelos / Protocolos</h2>
                 <div class="row">
@@ -307,6 +328,16 @@
                     </select>
                     <button onclick="carregarModelo()">Carregar</button>
                     <button class="danger" onclick="excluirModelo()">Excluir</button>
+=======
+            <div class="card model-card">
+                <h2>Carregar Modelos / Protocolos</h2>
+                <div class="row model-row">
+                    <select id="select-template">
+                        <option value="">-- Selecione um modelo salvo --</option>
+                    </select>
+                    <button data-action="carregar-modelo">Carregar</button>
+                    <button class="danger" data-action="excluir-modelo">Excluir</button>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
                 </div>
             </div>
 
@@ -325,7 +356,11 @@
                     <input type="text" id="med-posologia" placeholder="Ex: Tomar 1 comprimido de 8 em 8 horas por 5 dias.">
                 </div>
 
+<<<<<<< HEAD
                 <button onclick="adicionarMedicamento()">➕ Adicionar à Receita</button>
+=======
+                <button data-action="adicionar-medicamento">➕ Adicionar à Receita</button>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
             </div>
 
             <!-- Lista da Receita Atual -->
@@ -334,6 +369,7 @@
                 <ul class="med-list" id="lista-receita">
                     <!-- Itens inseridos via JS -->
                 </ul>
+<<<<<<< HEAD
                 <p id="empty-msg" style="color: var(--text-muted); font-size: 0.9rem;">Nenhum medicamento adicionado ainda.</p>
 
                 <div class="action-bar">
@@ -342,6 +378,16 @@
                         <button onclick="salvarModelo()">💾 Salvar como Modelo</button>
                     </div>
                     <button class="print-btn" onclick="prepararImpressao()">🖨️ Imprimir / PDF</button>
+=======
+                <p id="empty-msg" class="empty-msg">Nenhum medicamento adicionado ainda.</p>
+
+                <div class="action-bar">
+                    <div class="action-model">
+                        <input type="text" id="nome-modelo" placeholder="Nome do novo modelo">
+                        <button data-action="salvar-modelo">💾 Salvar como Modelo</button>
+                    </div>
+                    <button class="print-btn" data-action="imprimir">🖨️ Imprimir / PDF</button>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
                 </div>
             </div>
         </div>
@@ -353,6 +399,7 @@
     </div>
 
     <!-- SCRIPTS DE FUNCIONAMENTO -->
+<<<<<<< HEAD
     <script>
         /* ==================================================
            1. BANCO DE DADOS MOCKADO DE MEDICAMENTOS
@@ -670,5 +717,8 @@
             window.print();
         }
     </script>
+=======
+    <script src="../assets/js/receita.js" defer></script>
+>>>>>>> 53ae999 (Primeiro commit do projeto)
 </body>
 </html>

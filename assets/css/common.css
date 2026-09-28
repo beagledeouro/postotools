@@ -1,0 +1,47 @@
+/* Base visual compartilhada ESF CDI 2 */
+:root {
+    --brand: #087e8b;
+    --brand-dark: #06636d;
+    --brand-soft: #e6f4f4;
+    --surface: #fff;
+    --page-bg: #f3f7f8;
+    --text: #1f2937;
+    --muted: #64748b;
+    --border: #d8e1e5;
+    --danger: #c62828;
+    --radius: 12px;
+    --shadow: 0 4px 16px rgba(15, 45, 55, .09);
+    font-family: Inter, Roboto, "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+html { min-width: 320px; overflow-x: hidden; }
+body { margin: 0; min-height: 100vh; background: var(--page-bg); color: var(--text); line-height: 1.5; }
+img, canvas, iframe { max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+button { min-height: 44px; cursor: pointer; }
+input, select, textarea { min-width: 0; }
+:focus-visible { outline: 3px solid rgba(8, 126, 139, .3); outline-offset: 2px; }
+.app-header { width: 100%; padding: 16px clamp(16px, 4vw, 36px); color: #fff; background: linear-gradient(120deg, #076b76, #0b8990); box-shadow: 0 3px 12px rgba(10, 52, 61, .18); }
+.app-header-inner { width: min(1200px, 100%); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.app-header h1 { margin: 0; font-size: clamp(1.2rem, 3vw, 1.65rem); line-height: 1.25; }
+.app-header p { margin: 4px 0 0; color: rgba(255,255,255,.85); font-size: .92rem; }
+.home-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 14px; color: #fff; border: 1px solid rgba(255,255,255,.55); border-radius: 999px; text-decoration: none; white-space: nowrap; }
+.home-link:hover { background: rgba(255,255,255,.14); }
+.card, .form-card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); }
+.document-viewer { width: min(1200px, 100%); margin: 0 auto; padding: clamp(16px, 4vw, 32px); }
+.document-viewer > p { margin: 0 0 12px; }
+.document-viewer a { color: var(--brand-dark); font-weight: 600; }
+.pdf-frame { display: block; width: 100%; height: min(78vh, 900px); min-height: 420px; border: 0; border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); }
+.form-group, .input-group { min-width: 0; }
+label { display: block; margin-bottom: 5px; font-weight: 600; }
+input:not([type="checkbox"]), select, textarea { max-width: 100%; }
+button { transition: filter .15s ease, transform .15s ease; }
+button:hover { filter: brightness(.96); }
+@media (max-width: 600px) {
+    .app-header-inner { align-items: flex-start; flex-direction: column; }
+    .row, .action-bar, .btn-container { flex-wrap: wrap; }
+    .pdf-frame { height: 70vh; min-height: 360px; }
+}
+@media print {
+    .app-header, .home-link { display: none !important; }
+}

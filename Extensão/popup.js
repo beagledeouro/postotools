@@ -142,8 +142,9 @@ function preencherTexto(form, campo, valor) {
 
 function separarData(valor) {
     if (!valor) return null;
-    const iso = valor.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    const brasileira = valor.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    const texto = String(valor).trim().split(/[T\s]/, 1)[0];
+    const iso = texto.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/);
+    const brasileira = texto.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})$/);
     if (iso) return { ano: iso[1], mes: iso[2], dia: iso[3] };
     if (brasileira) return { dia: brasileira[1], mes: brasileira[2], ano: brasileira[3] };
     return null;
@@ -219,22 +220,33 @@ async function gerarCapaPDF(dados, arquivoModelo, prefixo) {
         ].forEach(([campo, valor]) => marcar(campo, valor));
     } else {
         const nascimento = separarData(dados.dataNasc);
+        const sexo = String(dados.sexo || '').trim().toUpperCase();
+        const sexoPorExtenso = sexo.startsWith('F') ? 'Feminino'
+            : sexo.startsWith('M') ? 'Masculino'
+                : dados.sexo;
         const campos = {
-            nome_9h1r: dados.nome,
-            data_de_nascimento_3l8h: nascimento ? `${nascimento.dia}/${nascimento.mes}/${nascimento.ano}` : '',
-            sexo_7s0c: dados.sexo,
-            est_civil_1o9s: dados.estadoCivil,
-            natural_8k6v: dados.natural,
-            filiacao_mae_5i5f: dados.mae,
-            pai_5e5i: dados.pai,
-            cpf_5h3q: dados.cpf,
-            cartao_sus_1a6o: dados.cns,
-            endereco_3s0j: dados.endereco,
-            text_1009_636_6o6t: dados.numero,
-            bairro_7m5k: dados.bairro,
-            cep_2o4c: dados.cep,
+            nome: dados.nome,
+            data_nascimento_dia: nascimento?.dia.padStart(2, '0'),
+            data_nascimento_mes: nascimento?.mes.padStart(2, '0'),
+            data_nascimento_ano: nascimento?.ano,
+            sexo: sexoPorExtenso,
+            estado_civil: dados.estadoCivil,
+            natural: dados.natural,
+            filiacao_mae: dados.mae,
+            filiacao_pai: dados.pai,
+            cpf: dados.cpf,
+            cartao_sus: dados.cns,
+            endereco: dados.endereco,
+            numero: dados.numero,
+            bairro: dados.bairro,
+            cidade: dados.complemento,
+            cep: dados.cep,
         };
-        Object.entries(campos).forEach(([campo, valor]) => preencherTexto(form, campo, valor));
+        Object.entries(campos).forEach(([campo, valor]) => {
+            if (!valor) return;
+            const campoTexto = form.getTextField(campo);
+            campoTexto.setText(String(valor));
+        });
     }
 
     form.updateFieldAppearances();

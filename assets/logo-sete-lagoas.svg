@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 150" role="img" aria-labelledby="title desc">
+  <title id="title">Sete Lagoas Prefeitura e Secretaria Municipal da Saúde</title>
+  <desc id="desc">Identidade institucional de Sete Lagoas e Secretaria Municipal da Saúde</desc>
+  <rect width="640" height="150" fill="#fff"/>
+  <g transform="translate(12 10)">
+    <path d="M55 3 94 18v39c0 33-18 55-39 70C34 112 16 90 16 57V18L55 3Z" fill="#fff" stroke="#18824b" stroke-width="4"/>
+    <path d="M55 5v118C34 109 21 88 21 57V21L55 5Z" fill="#d92b36"/>
+    <path d="M55 5v118c21-14 34-35 34-66V21L55 5Z" fill="#18824b"/>
+    <path d="m55 28 5 15 16 1-12 10 4 16-13-9-13 9 4-16-12-10 16-1 5-15Z" fill="#f4c542" stroke="#9c7412" stroke-width="2"/>
+    <path d="M30 18c7-10 17-14 25-14s18 4 25 14" fill="none" stroke="#777" stroke-width="4"/>
+    <path d="M37 11c-6-7-1-11 4-7 4-8 9-5 9 1 5-8 10-3 7 4" fill="none" stroke="#777" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <line x1="130" y1="16" x2="130" y2="134" stroke="#222" stroke-width="2"/>
+  <text x="151" y="51" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#111">SETE LAGOAS</text>
+  <text x="151" y="78" font-family="Arial, sans-serif" font-size="17" fill="#111">PREFEITURA</text>
+  <line x1="381" y1="22" x2="381" y2="128" stroke="#222" stroke-width="2"/>
+  <text x="404" y="54" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#111">SECRETARIA MUNICIPAL</text>
+  <text x="404" y="82" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#111">DA SAÚDE</text>
+</svg>

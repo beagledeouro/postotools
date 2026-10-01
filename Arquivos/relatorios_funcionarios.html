@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Profissional - ESF CDI 2</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/relatorios.css">
+    <script src="../assets/js/relatorios.js" defer></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="app-header-inner">
+            <h1>ESF CDI 2 — Relatório Profissional</h1>
+            <a class="home-link" href="../index.html">← Início</a>
+        </div>
+    </header>
+
+    <main class="report-screen">
+        <section class="form-card report-form-card">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Registro de atendimento</p>
+                    <h2>Criar relatório profissional</h2>
+                </div>
+                <span class="section-mark">ESF CDI 2</span>
+            </div>
+            <form id="reportForm">
+                <div class="report-grid">
+                    <div class="form-group">
+                        <label for="paciente">Nome do paciente</label>
+                        <input id="paciente" required placeholder="Nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="nascimento">Data de nascimento</label>
+                        <input id="nascimento" type="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="profissional">Profissional responsável</label>
+                        <input id="profissional" required placeholder="Nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="profissao">Profissão / especialidade</label>
+                        <input id="profissao" required placeholder="Ex.: Psicólogo(a), Fisioterapeuta, Médico(a)">
+                    </div>
+                    <div class="form-group">
+                        <label for="conselho">Conselho de classe (opcional)</label>
+                        <input id="conselho" placeholder="Ex.: CRP, CREFITO, CRM">
+                    </div>
+                    <div class="form-group">
+                        <label for="registro">Número do registro (opcional)</label>
+                        <input id="registro" placeholder="Ex.: 00000 / UF">
+                    </div>
+                    <div class="form-group">
+                        <label for="dataRelatorio">Data do relatório</label>
+                        <input id="dataRelatorio" type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="finalidade">Finalidade do relatório</label>
+                        <input id="finalidade" required placeholder="Ex.: acompanhamento, encaminhamento ou solicitação">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="relato">Relato profissional</label>
+                        <textarea id="relato" required placeholder="Descreva a avaliação, evolução, conduta, orientações ou informações pertinentes."></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="observacoes">Observações</label>
+                        <textarea id="observacoes" placeholder="Registre informações complementares, se necessário."></textarea>
+                    </div>
+                </div>
+                <div class="report-actions">
+                    <button class="primary-action" type="submit">Gerar relatório / imprimir</button>
+                    <button class="secondary-action" type="button" id="limparRelatorio">Limpar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <section id="reportPrint" class="report-print" aria-hidden="true"></section>
+</body>
+</html>

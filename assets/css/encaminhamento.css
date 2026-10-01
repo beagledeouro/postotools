@@ -22,7 +22,8 @@ textarea { resize: vertical; min-height: 90px; }
     .screen-container { display: none !important; }
     .print-container { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6mm; width: 287mm; height: 200mm; }
     .referral-half { min-width: 0; min-height: 0; height: 200mm; padding: 8mm; border: 1.5px solid #2e8b57; border-radius: 3mm; display: flex; flex-direction: column; position: relative; overflow: visible; break-inside: avoid; }
-    .print-header { text-align: center; font-size: 11pt; font-weight: bold; text-transform: uppercase; border-bottom: 2px solid #087e8b; padding-bottom: 5mm; margin-bottom: 6mm; }
+    .print-header { text-align: center; font-size: 11pt; font-weight: bold; text-transform: uppercase; padding-bottom: 5mm; margin-bottom: 6mm; }
+    .print-header .print-branding { text-transform: none; }
     .print-header span { display: block; line-height: 1.35; }
     .print-type { text-align: center; font-size: 13pt; font-weight: bold; margin-bottom: 5mm; padding: 2mm; background: #eee; border-radius: 1mm; }
     .print-field { margin-bottom: 2mm; font-size: 10.5pt; line-height: 1.4; overflow-wrap: anywhere; }

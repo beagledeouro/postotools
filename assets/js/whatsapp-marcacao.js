@@ -5,6 +5,8 @@ const inputData = document.getElementById('data');
 const inputHorario = document.getElementById('horario');
 const inputEspecialidade = document.getElementById('especialidade');
 const downloadBtn = document.getElementById('downloadBtn');
+const logoInstitucional = new Image();
+logoInstitucional.src = '../assets/logo-sete-lagoas.svg';
 
 function formatarData(dataISO) {
     if (!dataISO) return '';
@@ -19,13 +21,21 @@ function desenharCartao() {
     const especialidade = inputEspecialidade.value || '[Especialidade]';
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#087e8b';
-    ctx.fillRect(0, 0, canvas.width, 80);
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 32px "Segoe UI", Arial, sans-serif';
+    ctx.fillRect(0, 0, canvas.width, 72);
+    if (logoInstitucional.complete) ctx.drawImage(logoInstitucional, 24, 8, 238, 56);
+    ctx.fillStyle = '#087e8b';
+    ctx.font = 'bold 17px "Segoe UI", Arial, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('ESF CDI 2', canvas.width - 24, 36);
+    ctx.fillStyle = '#087e8b';
+    ctx.fillRect(0, 72, canvas.width, 72);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 29px "Segoe UI", Arial, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('LEMBRETE DE CONSULTA', canvas.width / 2, 40);
+    ctx.fillText('LEMBRETE DE CONSULTA', canvas.width / 2, 108);
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     const margemX = 40;
@@ -33,7 +43,7 @@ function desenharCartao() {
         ['Paciente:', paciente], ['Data:', data], ['Horário:', horario], ['Especialidade:', especialidade]
     ];
     linhas.forEach(([titulo, valor], indice) => {
-        const y = 108 + indice * 48;
+        const y = 172 + indice * 35;
         ctx.fillStyle = '#64748b';
         ctx.font = 'bold 20px "Segoe UI", Arial, sans-serif';
         ctx.fillText(titulo, margemX, y);
@@ -58,4 +68,5 @@ function baixarImagem() {
 
 [inputPaciente, inputData, inputHorario, inputEspecialidade].forEach(input => input.addEventListener('input', desenharCartao));
 downloadBtn.addEventListener('click', baixarImagem);
+logoInstitucional.addEventListener('load', desenharCartao);
 desenharCartao();

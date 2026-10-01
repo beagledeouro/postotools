@@ -177,7 +177,14 @@ function elemento(tag, texto, classe) {
 function gerarConteudoVia() {
     const via = elemento('div', null, 'via');
     const cabecalho = elemento('div', null, 'print-header');
-    cabecalho.append(elemento('h1', 'ESF CDI 2'), elemento('p', 'Receituário Médico'));
+    const marca = elemento('div', null, 'print-branding');
+    const logo = document.createElement('img');
+    logo.src = '../assets/logo-sete-lagoas.svg';
+    logo.alt = 'Sete Lagoas Prefeitura e Secretaria Municipal da Saúde';
+    const unidadeMarca = elemento('div', null, 'print-branding-unit');
+    unidadeMarca.append(elemento('strong', 'ESF CDI 2'), elemento('span', 'Receituário Médico'));
+    marca.append(logo, unidadeMarca);
+    cabecalho.append(marca);
     const paciente = elemento('div', null, 'print-patient');
     const nome = document.getElementById('pac-nome').value || '_______________________________________';
     const dadosPaciente = [['Paciente:', nome], ['Idade/Nasc:', document.getElementById('pac-idade').value], ['Endereço:', document.getElementById('pac-end').value]];

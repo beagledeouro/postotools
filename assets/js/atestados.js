@@ -35,7 +35,14 @@ function criarTextoComDestaque(partes) {
 function gerarVia(conteudo, unidade, medicoInfo, temCarimbo, dataDoc) {
     const via = criarElemento('div', null, 'via-doc');
     const cabecalho = criarElemento('div', null, 'via-header');
-    cabecalho.append(criarElemento('h2', unidade), criarElemento('h3', conteudo.titulo));
+    const marca = criarElemento('div', null, 'print-branding');
+    const logo = document.createElement('img');
+    logo.src = '../assets/logo-sete-lagoas.svg';
+    logo.alt = 'Sete Lagoas Prefeitura e Secretaria Municipal da Saúde';
+    const unidadeMarca = criarElemento('div', null, 'print-branding-unit');
+    unidadeMarca.append(criarElemento('strong', unidade), criarElemento('span', 'Secretaria Municipal da Saúde'));
+    marca.append(logo, unidadeMarca);
+    cabecalho.append(marca, criarElemento('h3', conteudo.titulo));
     const corpo = criarElemento('div', null, 'via-body');
     corpo.appendChild(criarTextoComDestaque(conteudo.corpo));
     if (conteudo.extra) {

@@ -16,11 +16,11 @@ textarea { resize: vertical; min-height: 90px; }
 .print-container { display: none; }
 .print-field-description-label { margin-top: 12px; }
 .professional-name { font-weight: bold; margin-bottom: 5px; }
-@page { size: A4 landscape; margin: 5mm; }
+@page { size: A4 landscape; margin: 0; }
 @media print {
-    html, body { width: 287mm; height: 200mm; margin: 0 !important; padding: 0 !important; overflow: hidden; background: #fff; }
+    html, body { width: 297mm; height: 210mm; margin: 0 !important; padding: 0 !important; overflow: hidden; background: #fff; }
     .screen-container { display: none !important; }
-    .print-container { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6mm; width: 287mm; height: 200mm; }
+    .print-container { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6mm; width: 297mm; height: 210mm; padding: 5mm; box-sizing: border-box; }
     .referral-half { min-width: 0; min-height: 0; height: 200mm; padding: 8mm; border: 1.5px solid #2e8b57; border-radius: 3mm; display: flex; flex-direction: column; position: relative; overflow: visible; break-inside: avoid; }
     .print-header { text-align: center; font-size: 11pt; font-weight: bold; text-transform: uppercase; padding-bottom: 5mm; margin-bottom: 6mm; }
     .print-header .print-branding { text-transform: none; }

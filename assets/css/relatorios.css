@@ -16,13 +16,13 @@ body { padding-bottom: 32px; }
 .primary-action { background: var(--brand); }
 .secondary-action { background: #64748b; }
 .report-print { display: none; }
-@page { size: A4 portrait; margin: 12mm; }
+@page { size: A4 portrait; margin: 0; }
 @media (max-width: 650px) { .report-grid { grid-template-columns: 1fr; } .report-grid .full-width { grid-column: auto; } .section-heading { flex-direction: column; } .report-actions { flex-direction: column; } }
 @media print {
     html, body { width: 210mm; min-height: 297mm; margin: 0 !important; padding: 0 !important; background: #fff; }
     .app-header, .report-screen { display: none !important; }
-    .report-print { display: block !important; width: 100%; min-height: 270mm; color: #111; }
-    .report-paper { min-height: 270mm; padding: 0; display: flex; flex-direction: column; }
+    .report-print { display: block !important; width: 210mm; min-height: 297mm; padding: 12mm; box-sizing: border-box; color: #111; }
+    .report-paper { min-height: 273mm; padding: 0; display: flex; flex-direction: column; }
     .report-institutional { display: flex; align-items: center; gap: 7mm; padding-bottom: 5mm; border-bottom: 1.5px solid #087e8b; }
     .report-institutional img { width: 78mm; height: auto; }
     .report-unit { margin-left: auto; text-align: right; }

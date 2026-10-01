@@ -49,4 +49,5 @@ button:hover { filter: brightness(.96); }
 }
 @media print {
     .app-header, .home-link { display: none !important; }
+    a[href] { color: inherit !important; text-decoration: none !important; }
 }

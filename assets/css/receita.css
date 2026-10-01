@@ -33,11 +33,11 @@ button.danger { background: var(--danger); }
 .print-area { display: none; }
 @media (max-width: 900px) { .app-container { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { .app-container { padding: 12px; gap: 8px; } .row, .model-row, .action-bar { flex-direction: column; align-items: stretch; } .row > div { width: 100%; } .action-model { flex-direction: column; align-items: stretch; } .action-model input { width: 100%; } }
-@page { size: A4 landscape; margin: 5mm; }
+@page { size: A4 landscape; margin: 0; }
 @media print {
-    html, body { width: 287mm; height: 200mm; margin: 0 !important; padding: 0 !important; overflow: hidden; background: #fff; color: #111; }
+    html, body { width: 297mm; height: 210mm; margin: 0 !important; padding: 0 !important; overflow: hidden; background: #fff; color: #111; }
     .app-header, .app-container { display: none !important; }
-    .print-area { display: grid !important; grid-template-columns: minmax(0, 1fr) 0 minmax(0, 1fr); column-gap: 3mm; width: 287mm; height: 200mm; box-sizing: border-box; }
+    .print-area { display: grid !important; grid-template-columns: minmax(0, 1fr) 0 minmax(0, 1fr); column-gap: 3mm; width: 297mm; height: 210mm; padding: 5mm; box-sizing: border-box; }
     .via { min-width: 0; min-height: 0; height: 200mm; padding: 4mm 5mm; display: flex; flex-direction: column; position: relative; box-sizing: border-box; overflow: visible; }
     .via > * { max-width: 100%; box-sizing: border-box; }
     .via-1 { grid-column: 1; }

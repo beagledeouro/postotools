@@ -6,7 +6,7 @@ const inputHorario = document.getElementById('horario');
 const inputEspecialidade = document.getElementById('especialidade');
 const downloadBtn = document.getElementById('downloadBtn');
 const logoInstitucional = new Image();
-logoInstitucional.src = '../assets/logo-sete-lagoas.svg';
+logoInstitucional.src = '../assets/logo.png';
 
 function formatarData(dataISO) {
     if (!dataISO) return '';

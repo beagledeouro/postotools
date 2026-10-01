@@ -37,7 +37,7 @@ function gerarVia(conteudo, unidade, medicoInfo, temCarimbo, dataDoc) {
     const cabecalho = criarElemento('div', null, 'via-header');
     const marca = criarElemento('div', null, 'print-branding');
     const logo = document.createElement('img');
-    logo.src = '../assets/logo-sete-lagoas.svg';
+    logo.src = '../assets/logo.png';
     logo.alt = 'Sete Lagoas Prefeitura e Secretaria Municipal da Saúde';
     const unidadeMarca = criarElemento('div', null, 'print-branding-unit');
     unidadeMarca.append(criarElemento('strong', unidade), criarElemento('span', 'Secretaria Municipal da Saúde'));
@@ -64,7 +64,17 @@ function gerarVia(conteudo, unidade, medicoInfo, temCarimbo, dataDoc) {
     return via;
 }
 
-function gerarImpressao(event) {
+function imagensProntas(container) {
+    return Promise.all([...container.querySelectorAll('img')].map(imagem => {
+        if (imagem.complete) return Promise.resolve();
+        return new Promise(resolve => {
+            imagem.addEventListener('load', resolve, { once: true });
+            imagem.addEventListener('error', resolve, { once: true });
+        });
+    }));
+}
+
+async function gerarImpressao(event) {
     event.preventDefault();
     const form = document.getElementById('docForm');
     if (!form.reportValidity()) return;
@@ -115,6 +125,7 @@ function gerarImpressao(event) {
 
     const via = gerarVia(conteudo, unidade, medicoInfo, temCarimbo, dataDoc);
     document.getElementById('printArea').replaceChildren(via, via.cloneNode(true));
+    await imagensProntas(document.getElementById('printArea'));
     window.print();
 }
 

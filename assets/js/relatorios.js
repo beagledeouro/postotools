@@ -7,6 +7,7 @@ const camposRelatorio = {
     registro: document.getElementById('registro'),
     dataRelatorio: document.getElementById('dataRelatorio'),
     finalidade: document.getElementById('finalidade'),
+    tituloDocumento: document.getElementById('tituloDocumento'),
     relato: document.getElementById('relato'),
     observacoes: document.getElementById('observacoes')
 };
@@ -25,7 +26,15 @@ function criarTextoRotulado(rotulo, valor) {
     return item;
 }
 
-function gerarRelatorio(event) {
+function imagemPronta(imagem) {
+    if (imagem.complete) return Promise.resolve();
+    return new Promise(resolve => {
+        imagem.addEventListener('load', resolve, { once: true });
+        imagem.addEventListener('error', resolve, { once: true });
+    });
+}
+
+async function gerarRelatorio(event) {
     event.preventDefault();
     const form = document.getElementById('reportForm');
     if (!form.reportValidity()) return;
@@ -34,19 +43,20 @@ function gerarRelatorio(event) {
     const header = document.createElement('header');
     header.className = 'report-institutional';
     const logo = document.createElement('img');
-    logo.src = '../assets/logo-sete-lagoas.svg';
+    logo.src = '../assets/logo.png';
     logo.alt = 'Sete Lagoas Prefeitura e Secretaria Municipal da Saúde';
     const unit = document.createElement('div');
     unit.className = 'report-unit';
     unit.append(document.createElement('strong'));
     unit.lastChild.textContent = 'ESF CDI 2';
     unit.append(document.createElement('span'));
-    unit.lastChild.textContent = 'Relatório profissional';
+    unit.lastChild.textContent = camposRelatorio.tituloDocumento.value;
     header.append(logo, unit);
 
     const title = document.createElement('div');
     title.className = 'report-title';
-    title.innerHTML = '<h1>Relatório profissional</h1><p>Registro de atendimento da unidade de saúde</p>';
+    title.append(document.createElement('h1'));
+    title.firstChild.textContent = camposRelatorio.tituloDocumento.value;
 
     const info = document.createElement('div');
     info.className = 'report-info';
@@ -84,6 +94,7 @@ function gerarRelatorio(event) {
     footer.append(dataEmissao, assinatura);
     paper.append(header, title, info, atividades, observacoes, footer);
     document.getElementById('reportPrint').replaceChildren(paper);
+    await imagemPronta(logo);
     window.print();
 }
 

@@ -179,7 +179,7 @@ function gerarConteudoVia() {
     const cabecalho = elemento('div', null, 'print-header');
     const marca = elemento('div', null, 'print-branding');
     const logo = document.createElement('img');
-    logo.src = '../assets/logo-sete-lagoas.svg';
+    logo.src = '../assets/logo.png';
     logo.alt = 'Sete Lagoas Prefeitura e Secretaria Municipal da Saúde';
     const unidadeMarca = elemento('div', null, 'print-branding-unit');
     unidadeMarca.append(elemento('strong', 'ESF CDI 2'), elemento('span', 'Receituário Médico'));
@@ -235,6 +235,16 @@ function regrasDeImpressaoParaMedicao() {
 
 function proximoQuadro() { return new Promise(resolve => requestAnimationFrame(resolve)); }
 
+function imagensProntas(container) {
+    return Promise.all([...container.querySelectorAll('img')].map(imagem => {
+        if (imagem.complete) return Promise.resolve();
+        return new Promise(resolve => {
+            imagem.addEventListener('load', resolve, { once: true });
+            imagem.addEventListener('error', resolve, { once: true });
+        });
+    }));
+}
+
 async function prepararImpressao() {
     const area = document.getElementById('print-area');
     const vias = [gerarConteudoVia(), gerarConteudoVia()];
@@ -242,6 +252,7 @@ async function prepararImpressao() {
     vias[1].classList.add('via-2');
     const corte = elemento('div', null, 'cut-line');
     area.replaceChildren(vias[0], corte, vias[1]);
+    await imagensProntas(area);
 
     const medicao = document.createElement('style');
     medicao.dataset.printMeasurement = 'true';

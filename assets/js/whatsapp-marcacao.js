@@ -61,7 +61,7 @@ function baixarImagem() {
     const nomeBase = inputPaciente.value.trim().toLowerCase()
         .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const link = document.createElement('a');
-    link.download = `consulta${nomeBase ? `-${nomeBase}` : ''}.png`;
+    link.download = `${nomeBase || 'paciente'}_consulta.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
 }

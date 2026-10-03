@@ -273,7 +273,7 @@ async function prepararImpressao() {
         alert('O conteúdo da receita excede o espaço de uma via. Reduza ou revise os dados/posologias e tente novamente; a impressão foi cancelada para evitar cortes.');
         return;
     }
-    window.print();
+    await baixarPDFEAguardarImpressao(nomeArquivoSeguro(document.getElementById('pac-nome').value, 'receita'), 'l');
 }
 
 document.addEventListener('DOMContentLoaded', () => {

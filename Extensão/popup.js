@@ -250,7 +250,7 @@ async function gerarCapaPDF(dados, arquivoModelo, prefixo) {
     }
 
     form.updateFieldAppearances();
-    await baixarPDF(await pdfDoc.save(), `${prefixo}_${nomeArquivoSeguro(dados.nome)}.pdf`);
+    await baixarPDF(await pdfDoc.save(), `${nomeArquivoSeguro(dados.nome)}_${prefixo}.pdf`);
 }
 
 async function gerarCapaGestantePDF(dados) {
@@ -327,5 +327,5 @@ async function gerarDeclaracaoPDF(dados) {
         x: margem, y: 55, size: 8, font: fonte, color: secundaria,
     });
 
-    await baixarPDF(await pdfDoc.save(), `Declaracao_Comparecimento_${nomeArquivoSeguro(dados.nome)}.pdf`);
+    await baixarPDF(await pdfDoc.save(), `${nomeArquivoSeguro(dados.nome)}_Declaracao_Comparecimento.pdf`);
 }

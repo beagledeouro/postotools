@@ -126,7 +126,7 @@ async function gerarImpressao(event) {
     const via = gerarVia(conteudo, unidade, medicoInfo, temCarimbo, dataDoc);
     document.getElementById('printArea').replaceChildren(via, via.cloneNode(true));
     await imagensProntas(document.getElementById('printArea'));
-    window.print();
+    await baixarPDFEAguardarImpressao(nomeArquivoSeguro(nome, tipo === 'atestado' ? 'atestado' : 'declaracao'), 'l');
 }
 
 function limparFormulario() {

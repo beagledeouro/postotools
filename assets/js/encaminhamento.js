@@ -53,7 +53,7 @@ async function gerarPDF() {
         alert('O conteúdo de uma das vias excede a área imprimível. Reduza ou revise a descrição e os campos longos antes de imprimir; nenhuma via foi cortada.');
         return;
     }
-    window.print();
+    await baixarPDFEAguardarImpressao(nomeArquivoSeguro(document.getElementById('p1-nome').value, 'encaminhamento'), 'l');
 }
 
 document.addEventListener('DOMContentLoaded', () => {

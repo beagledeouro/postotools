@@ -95,7 +95,7 @@ async function gerarRelatorio(event) {
     paper.append(header, title, info, atividades, observacoes, footer);
     document.getElementById('reportPrint').replaceChildren(paper);
     await imagemPronta(logo);
-    window.print();
+    await baixarPDFEAguardarImpressao(nomeArquivoSeguro(camposRelatorio.paciente.value, 'relatorio'), 'p');
 }
 
 document.getElementById('reportForm').addEventListener('submit', gerarRelatorio);

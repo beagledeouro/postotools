@@ -4,12 +4,54 @@ function formatarData(dataStr) {
     return `${dia}/${mes}/${ano}`;
 }
 
-function definirDataHoje(campo) { campo.valueAsDate = new Date(); }
+function definirDataHoje(campo) {
+    const hoje = new Date();
+    const dataLocal = new Date(hoje.getTime() - hoje.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    campo.value = dataLocal;
+}
+
+function aplicarMascaraCPF(valor) {
+    let limpo = valor.replace(/\D/g, '').slice(0, 11);
+    if (limpo.length > 9) {
+        return limpo.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2})$/, '$1.$2.$3-$4');
+    } else if (limpo.length > 6) {
+        return limpo.replace(/^(\d{3})(\d{3})(\d{0,3})$/, '$1.$2.$3');
+    } else if (limpo.length > 3) {
+        return limpo.replace(/^(\d{3})(\d{0,3})$/, '$1.$2');
+    }
+    return limpo;
+}
+
+function atualizarPrevisaoRetorno() {
+    const inicioStr = document.getElementById('inicioAfastamento').value;
+    const dias = parseInt(document.getElementById('qtdDias').value, 10) || 1;
+    if (!inicioStr) return;
+
+    const [ano, mes, dia] = inicioStr.split('-').map(Number);
+    const dataInicio = new Date(ano, mes - 1, dia);
+    // Adiciona os dias de afastamento
+    dataInicio.setDate(dataInicio.getDate() + dias);
+
+    const d = String(dataInicio.getDate()).padStart(2, '0');
+    const m = String(dataInicio.getMonth() + 1).padStart(2, '0');
+    const a = dataInicio.getFullYear();
+
+    document.getElementById('previsaoRetorno').value = `${d}/${m}/${a}`;
+}
 
 function mudarTipoDoc() {
-    const atestado = document.getElementById('tipoDoc').value === 'atestado';
-    document.getElementById('secaoAtestado').style.display = atestado ? 'block' : 'none';
-    document.getElementById('secaoDeclaracao').style.display = atestado ? 'none' : 'block';
+    const tipo = document.getElementById('tipoDoc').value;
+    const secaoAtestado = document.getElementById('secaoAtestado');
+    const secaoDeclaracao = document.getElementById('secaoDeclaracao');
+    const secaoAcompanhante = document.getElementById('secaoAcompanhante');
+
+    secaoAtestado.style.display = tipo === 'atestado' ? 'block' : 'none';
+    secaoDeclaracao.style.display = tipo === 'declaracao' ? 'block' : 'none';
+    secaoAcompanhante.style.display = tipo === 'acompanhante' ? 'block' : 'none';
+
+    if (tipo === 'atestado') {
+        atualizarPrevisaoRetorno();
+    }
 }
 
 function toggleCid() {
@@ -39,27 +81,39 @@ function gerarVia(conteudo, unidade, medicoInfo, temCarimbo, dataDoc) {
     const logo = document.createElement('img');
     logo.src = '../assets/logo.png';
     logo.alt = 'Sete Lagoas Prefeitura e Secretaria Municipal da Saúde';
+
     const unidadeMarca = criarElemento('div', null, 'print-branding-unit');
-    unidadeMarca.append(criarElemento('strong', unidade), criarElemento('span', 'Secretaria Municipal da Saúde'));
+    unidadeMarca.append(criarElemento('strong', unidade), criarElemento('span', 'Secretaria Municipal de Saúde'));
     marca.append(logo, unidadeMarca);
+
     cabecalho.append(marca, criarElemento('h3', conteudo.titulo));
+
     const corpo = criarElemento('div', null, 'via-body');
     corpo.appendChild(criarTextoComDestaque(conteudo.corpo));
+
     if (conteudo.extra) {
         const extra = criarElemento('p', null, 'document-extra');
-        extra.append(criarElemento('strong', 'CID:'), document.createTextNode(` ${conteudo.extra}`));
+        extra.append(criarElemento('strong', 'CID-10:'), document.createTextNode(` ${conteudo.extra}`));
         corpo.appendChild(extra);
     }
+
     const rodape = criarElemento('div', null, 'via-footer');
     rodape.appendChild(criarElemento('div', `Sete Lagoas - MG, ${dataDoc}`));
-    if (temCarimbo) rodape.appendChild(criarElemento('div', 'Carimbo e Assinatura da Unidade / Profissional', 'stamp-box'));
+
+    if (temCarimbo) {
+        rodape.appendChild(criarElemento('div', 'Carimbo e Assinatura da Unidade / Profissional', 'stamp-box'));
+    }
+
     const assinatura = criarElemento('div', null, 'signature-box');
     const linha = criarElemento('div', null, 'signature-line');
     const [nomeMedico, crm] = medicoInfo;
     linha.append(document.createTextNode(nomeMedico));
-    if (crm) linha.append(document.createElement('br'), document.createTextNode(crm));
+    if (crm) {
+        linha.append(document.createElement('br'), document.createTextNode(crm));
+    }
     assinatura.appendChild(linha);
     rodape.appendChild(assinatura);
+
     via.append(cabecalho, corpo, rodape);
     return via;
 }
@@ -81,10 +135,12 @@ async function gerarImpressao(event) {
 
     const tipo = document.getElementById('tipoDoc').value;
     const unidade = document.getElementById('unidade').value || 'ESF CDI 2';
-    const nome = document.getElementById('nome').value;
-    const cpf = document.getElementById('cpf').value;
+    const nome = document.getElementById('nome').value.trim();
+    const cpf = document.getElementById('cpf').value.trim();
     const dataDoc = formatarData(document.getElementById('dataDoc').value);
-    const medicoNome = document.getElementById('medicoNome').value || 'Médico Responsável';
+    const medicoNome = document.getElementById('medicoNome').value.trim() || 'Profissional Responsável';
+    const medicoCrm = document.getElementById('medicoCrm').value.trim();
+
     let conteudo;
     let medicoInfo;
     let temCarimbo = false;
@@ -92,41 +148,84 @@ async function gerarImpressao(event) {
     if (tipo === 'atestado') {
         const qtdDias = document.getElementById('qtdDias').value;
         const inicio = formatarData(document.getElementById('inicioAfastamento').value);
-        const codigoCid = document.getElementById('codigoCid').value;
+        const retorno = document.getElementById('previsaoRetorno').value;
+        const codigoCid = document.getElementById('codigoCid').value.trim();
         const incluirCid = document.getElementById('exibirCid').checked && codigoCid;
         const autorizado = document.getElementById('autorizaCid').checked;
-        const extra = incluirCid ? `${codigoCid} (${autorizado ? 'divulgação autorizada pelo paciente' : 'mediante expressa autorização do paciente'})` : '';
+
+        const extra = incluirCid ? `${codigoCid} (${autorizado ? 'divulgação expressamente autorizada pelo paciente' : 'autorizada'})` : '';
+
         conteudo = {
             titulo: 'Atestado Médico',
             corpo: [
-                'Atesto para os devidos fins, a pedido do(a) interessado(a), que ', { destaque: nome },
-                ', portador(a) do CPF ', { destaque: cpf },
-                `, foi submetido(a) a atendimento médico nesta data. Em decorrência, deverá permanecer afastado(a) de suas atividades laborais/escolares por `,
-                { destaque: `${qtdDias} dia(s)` }, `, a partir de ${inicio}.`
+                'Atesto para os devidos fins legais, a pedido do(a) interessado(a), que ',
+                { destaque: nome },
+                ', portador(a) do CPF ',
+                { destaque: cpf },
+                ', esteve sob atendimento médico nesta unidade de saúde nesta data. Em decorrência do quadro clínico, deverá permanecer afastado(a) de suas atividades laborais e escolares por um período de ',
+                { destaque: `${qtdDias} dia(s)` },
+                `, a partir de ${inicio}, com previsão de retorno às atividades em ${retorno}.`
             ],
             extra
         };
-        medicoInfo = [medicoNome, document.getElementById('medicoCrm').value];
-    } else {
+        medicoInfo = [medicoNome, medicoCrm];
+    } else if (tipo === 'declaracao') {
         const hInicio = document.getElementById('horaInicio').value;
         const hFim = document.getElementById('horaFim').value;
+
         conteudo = {
             titulo: 'Declaração de Comparecimento',
             corpo: [
-                'Declaro para os devidos fins que ', { destaque: nome }, ', portador(a) do CPF ', { destaque: cpf },
-                `, esteve comparecendo nesta unidade de saúde (${unidade}) no dia ${dataDoc}, no período das `,
-                { destaque: hInicio }, ' às ', { destaque: hFim }, ' horas, para fins de consulta/atendimento médico.'
+                'Declaro para os devidos fins de comprovação que ',
+                { destaque: nome },
+                ', portador(a) do CPF ',
+                { destaque: cpf },
+                `, esteve presente na unidade de saúde ${unidade} no dia ${dataDoc}, no período das `,
+                { destaque: hInicio },
+                ' às ',
+                { destaque: hFim },
+                ' horas, para fins de consulta e atendimento em saúde.'
             ],
             extra: ''
         };
-        medicoInfo = ['Profissional Responsável / Recepção', ''];
+        medicoInfo = ['Profissional / Recepção da Unidade', ''];
+        temCarimbo = true;
+    } else if (tipo === 'acompanhante') {
+        const acompNome = document.getElementById('acompNome').value.trim() || 'Acompanhante';
+        const acompCpf = document.getElementById('acompCpf').value.trim() || 'Não informado';
+        const acompParentesco = document.getElementById('acompParentesco').value.trim() || 'Acompanhante';
+        const hInicio = document.getElementById('acompInicio').value;
+        const hFim = document.getElementById('acompFim').value;
+
+        conteudo = {
+            titulo: 'Declaração de Acompanhante',
+            corpo: [
+                'Declaro para os devidos fins de comprovação que ',
+                { destaque: acompNome },
+                ', portador(a) do CPF ',
+                { destaque: acompCpf },
+                ` (${acompParentesco}), esteve presente na unidade de saúde ${unidade} no dia ${dataDoc}, no período das `,
+                { destaque: hInicio },
+                ' às ',
+                { destaque: hFim },
+                ' horas, exercendo a função de acompanhante do(a) paciente ',
+                { destaque: nome },
+                ', portador(a) do CPF ',
+                { destaque: cpf },
+                ', durante a realização de atendimento em saúde.'
+            ],
+            extra: ''
+        };
+        medicoInfo = ['Profissional / Recepção da Unidade', ''];
         temCarimbo = true;
     }
 
     const via = gerarVia(conteudo, unidade, medicoInfo, temCarimbo, dataDoc);
     document.getElementById('printArea').replaceChildren(via, via.cloneNode(true));
     await imagensProntas(document.getElementById('printArea'));
-    await baixarPDFEAguardarImpressao(nomeArquivoSeguro(nome, tipo === 'atestado' ? 'atestado' : 'declaracao'), 'l');
+
+    const nomeArquivo = tipo === 'acompanhante' ? document.getElementById('acompNome').value || nome : nome;
+    await baixarPDFEAguardarImpressao(nomeArquivoSeguro(nomeArquivo, tipo), 'l');
 }
 
 function limparFormulario() {
@@ -137,13 +236,37 @@ function limparFormulario() {
     toggleCid();
 }
 
+function carregarParametrosURL() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('nome')) document.getElementById('nome').value = params.get('nome');
+    if (params.has('cpf')) document.getElementById('cpf').value = aplicarMascaraCPF(params.get('cpf'));
+    if (params.has('nascimento')) document.getElementById('nascimento').value = params.get('nascimento');
+    if (params.has('tipo')) {
+        document.getElementById('tipoDoc').value = params.get('tipo');
+        mudarTipoDoc();
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     definirDataHoje(document.getElementById('dataDoc'));
-    document.getElementById('nascimento').valueAsDate = new Date(2000, 0, 1);
     definirDataHoje(document.getElementById('inicioAfastamento'));
+
+    // Máscaras de CPF
+    document.getElementById('cpf').addEventListener('input', (e) => {
+        e.target.value = aplicarMascaraCPF(e.target.value);
+    });
+    document.getElementById('acompCpf').addEventListener('input', (e) => {
+        e.target.value = aplicarMascaraCPF(e.target.value);
+    });
+
+    document.getElementById('qtdDias').addEventListener('input', atualizarPrevisaoRetorno);
+    document.getElementById('inicioAfastamento').addEventListener('input', atualizarPrevisaoRetorno);
+
     document.getElementById('tipoDoc').addEventListener('change', mudarTipoDoc);
     document.getElementById('exibirCid').addEventListener('change', toggleCid);
     document.getElementById('docForm').addEventListener('submit', gerarImpressao);
     document.querySelector('[data-action="limpar"]').addEventListener('click', limparFormulario);
+
     mudarTipoDoc();
+    carregarParametrosURL();
 });

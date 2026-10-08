@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Gerador de Capa G-MUS",
-  "version": "1.1",
-  "description": "Extrai dados do G-MUS e gera capas de prontuário, capa gestante e declaração de comparecimento.",
+  "version": "1.2",
+  "description": "Extrai dados do G-MUS, gera capas de prontuário, declaração e integra com o portal clínico da ESF CDI 2.",
   "permissions": ["activeTab", "scripting", "downloads"],
   "action": {
     "default_popup": "popup.html",

@@ -23,117 +23,193 @@
     <div class="screen-container">
         <div class="header-app">
             <h2>Gerador de Documentos Clínicos</h2>
-            <p>Preencha os dados abaixo. Eles serão divididos em 2 encaminhamentos na folha A4 (Paisagem).</p>
+            <p>Preencha os dados abaixo. Eles serão divididos em 2 vias na folha A4 (Paisagem).</p>
         </div>
 
         <div class="forms-wrapper">
+            <!-- PACIENTE 1 -->
             <div class="form-card">
-                <h2>Paciente 1</h2>
+                <div class="card-header-flex">
+                    <h2>Paciente 1 (1ª Via)</h2>
+                </div>
                 
-                <div class="input-group">
-                    <label>Nome do Paciente</label>
-                    <input type="text" id="p1-nome" placeholder="Nome completo">
+                <div class="row">
+                    <div class="input-group" style="flex: 2 1 280px;">
+                        <label for="p1-nome">Nome do Paciente</label>
+                        <input type="text" id="p1-nome" placeholder="Nome completo" required>
+                    </div>
+                    <div class="input-group" style="flex: 1 1 160px;">
+                        <label for="p1-cns">Cartão SUS (CNS)</label>
+                        <input type="text" id="p1-cns" placeholder="000 0000 0000 0000">
+                    </div>
                 </div>
                 
                 <div class="input-group">
-                    <label>Endereço</label>
+                    <label for="p1-endereco">Endereço</label>
                     <input type="text" id="p1-endereco" placeholder="Rua, Número, Bairro">
                 </div>
 
                 <div class="row">
                     <div class="input-group">
-                        <label>Tipo de Documento</label>
+                        <label for="p1-tipo">Tipo de Documento</label>
                         <select id="p1-tipo">
                             <option value="ENCAMINHAMENTO">Encaminhamento</option>
                             <option value="PEDIDO DE EXAME">Pedido de Exame</option>
+                            <option value="SOLICITAÇÃO DE PROCEDIMENTO">Solicitação de Procedimento</option>
                         </select>
                     </div>
                     <div class="input-group">
-                        <label>Especialidade / Exame</label>
-                        <input type="text" id="p1-especialidade" placeholder="Ex: Cardiologia, Hemograma...">
+                        <label for="p1-especialidade">Especialidade / Exame</label>
+                        <input type="text" id="p1-especialidade" list="lista-especialidades" placeholder="Ex: Cardiologia, Fisioterapia, Hemograma...">
+                    </div>
+                    <div class="input-group">
+                        <label for="p1-cid">Hipótese Diagnóstica / CID-10 (opcional)</label>
+                        <input type="text" id="p1-cid" placeholder="Ex: I10, M54.5 ou Hipertensão">
                     </div>
                 </div>
 
                 <div class="input-group">
-                    <label>Descrição (Motivo / Solicitação)</label>
-                    <textarea id="p1-descricao" placeholder="Descreva os sintomas, história clínica ou o exame solicitado..."></textarea>
+                    <label for="p1-descricao">Descrição (História Clínica / Motivo / Justificativa)</label>
+                    <textarea id="p1-descricao" placeholder="Descreva os sintomas, história clínica, evolução ou justificativa da solicitação..."></textarea>
                 </div>
 
                 <div class="row">
                     <div class="input-group">
-                        <label>Nome do Profissional</label>
+                        <label for="p1-profissional">Nome do Profissional Solicitante</label>
                         <input type="text" id="p1-profissional" value="Leonardo Silva dos Santos">
                     </div>
                     <div class="input-group">
-                        <label>Data</label>
+                        <label for="p1-data">Data</label>
                         <input type="date" id="p1-data">
                     </div>
                 </div>
             </div>
 
+            <!-- PACIENTE 2 -->
             <div class="form-card">
-                <h2>Paciente 2</h2>
+                <div class="card-header-flex">
+                    <h2>Paciente 2 (2ª Via / Outro Paciente)</h2>
+                    <div class="card-header-actions">
+                        <button type="button" class="btn-small" id="btn-duplicar-p1" title="Copiar todos os dados do Paciente 1 para criar uma 2ª via idêntica">
+                            📋 Copiar Paciente 1 (2ª Via)
+                        </button>
+                        <button type="button" class="btn-small danger" id="btn-limpar-p2" title="Limpar campos do Paciente 2">
+                            🧹 Limpar Paciente 2
+                        </button>
+                    </div>
+                </div>
                 
-                <div class="input-group">
-                    <label>Nome do Paciente</label>
-                    <input type="text" id="p2-nome" placeholder="Nome completo">
+                <div class="row">
+                    <div class="input-group" style="flex: 2 1 280px;">
+                        <label for="p2-nome">Nome do Paciente</label>
+                        <input type="text" id="p2-nome" placeholder="Nome completo">
+                    </div>
+                    <div class="input-group" style="flex: 1 1 160px;">
+                        <label for="p2-cns">Cartão SUS (CNS)</label>
+                        <input type="text" id="p2-cns" placeholder="000 0000 0000 0000">
+                    </div>
                 </div>
                 
                 <div class="input-group">
-                    <label>Endereço</label>
+                    <label for="p2-endereco">Endereço</label>
                     <input type="text" id="p2-endereco" placeholder="Rua, Número, Bairro">
                 </div>
 
                 <div class="row">
                     <div class="input-group">
-                        <label>Tipo de Documento</label>
+                        <label for="p2-tipo">Tipo de Documento</label>
                         <select id="p2-tipo">
                             <option value="ENCAMINHAMENTO">Encaminhamento</option>
                             <option value="PEDIDO DE EXAME">Pedido de Exame</option>
+                            <option value="SOLICITAÇÃO DE PROCEDIMENTO">Solicitação de Procedimento</option>
                         </select>
                     </div>
                     <div class="input-group">
-                        <label>Especialidade / Exame</label>
-                        <input type="text" id="p2-especialidade" placeholder="Ex: Fisioterapia, Raio-X...">
+                        <label for="p2-especialidade">Especialidade / Exame</label>
+                        <input type="text" id="p2-especialidade" list="lista-especialidades" placeholder="Ex: Fisioterapia, Raio-X...">
+                    </div>
+                    <div class="input-group">
+                        <label for="p2-cid">Hipótese Diagnóstica / CID-10 (opcional)</label>
+                        <input type="text" id="p2-cid" placeholder="Ex: I10, M54.5">
                     </div>
                 </div>
 
                 <div class="input-group">
-                    <label>Descrição (Motivo / Solicitação)</label>
+                    <label for="p2-descricao">Descrição (História Clínica / Motivo / Justificativa)</label>
                     <textarea id="p2-descricao" placeholder="Descreva os sintomas, história clínica ou o exame solicitado..."></textarea>
                 </div>
 
                 <div class="row">
                     <div class="input-group">
-                        <label>Nome do Profissional</label>
+                        <label for="p2-profissional">Nome do Profissional Solicitante</label>
                         <input type="text" id="p2-profissional" value="Leonardo Silva dos Santos">
                     </div>
                     <div class="input-group">
-                        <label>Data</label>
+                        <label for="p2-data">Data</label>
                         <input type="date" id="p2-data">
                     </div>
                 </div>
             </div>
         </div>
 
-        <button class="btn-print" id="btn-print" type="button">Gerar PDF / Imprimir</button>
+        <button class="btn-print" id="btn-print" type="button">Gerar PDF / Imprimir (2 Vias)</button>
     </div>
 
+    <!-- Datalist com especialidades e exames comuns do SUS -->
+    <datalist id="lista-especialidades">
+        <option value="Cardiologia">
+        <option value="Ortopedia e Traumatologia">
+        <option value="Oftalmologia">
+        <option value="Ginecologia e Obstetrícia">
+        <option value="Neurologia">
+        <option value="Pediatria">
+        <option value="Dermatologia">
+        <option value="Psiquiatria">
+        <option value="Otorrinolaringologia">
+        <option value="Urologia">
+        <option value="Endocrinologia">
+        <option value="Gastroenterologia">
+        <option value="Cirurgia Geral">
+        <option value="Fisioterapia">
+        <option value="Fonoaudiologia">
+        <option value="Nutrição">
+        <option value="Psicologia">
+        <option value="Terapia Ocupacional">
+        <option value="Hemograma Completo + Bioquímica">
+        <option value="Glicemia de Jejum + HbA1c + Perfil Lipídico">
+        <option value="Urina Rotina (EAS) + Urocultura">
+        <option value="Ultrassonografia de Abdome Total">
+        <option value="Ultrassonografia Transvaginal">
+        <option value="Ultrassonografia de Mamas">
+        <option value="Ultrassonografia de Tireoide">
+        <option value="Ultrassonografia Obstétrica">
+        <option value="Mamografia Bilateral">
+        <option value="Radiografia (Raio-X) de Tórax PA/Perfil">
+        <option value="Eletrocardiograma (ECG)">
+        <option value="Ecocardiograma Transtorácico">
+        <option value="Endoscopia Digestiva Alta">
+        <option value="Tomografia Computadorizada">
+    </datalist>
+
+    <!-- ÁREA DE IMPRESSÃO (2 VIAS A4 PAISAGEM) -->
     <div class="print-container">
         
-        <div class="referral-half">
+        <!-- VIA 1 -->
+        <div class="referral-half" id="print-via-1">
             <div class="print-header">
                 <div class="print-branding">
                     <img src="../assets/logo.png" alt="Sete Lagoas Prefeitura e Secretaria Municipal da Saúde">
-                    <div class="print-branding-unit"><strong>ESF CDI 2</strong><span>Encaminhamento</span></div>
+                    <div class="print-branding-unit"><strong>ESF CDI 2</strong><span>Atenção Primária à Saúde</span></div>
                 </div>
             </div>
             
             <div class="print-type" id="out-p1-tipo">ENCAMINHAMENTO</div>
 
             <div class="print-field"><strong>Nome:</strong> <span id="out-p1-nome"></span></div>
+            <div class="print-field" id="field-p1-cns"><strong>Cartão SUS:</strong> <span id="out-p1-cns"></span></div>
             <div class="print-field"><strong>Endereço:</strong> <span id="out-p1-endereco"></span></div>
             <div class="print-field"><strong>Especialidade/Exame:</strong> <span id="out-p1-especialidade"></span></div>
+            <div class="print-field" id="field-p1-cid"><strong>Hipótese / CID:</strong> <span id="out-p1-cid"></span></div>
             
             <div class="print-field print-field-description-label"><strong>Descrição / Motivo Clínico:</strong></div>
             <div class="print-description" id="out-p1-descricao"></div>
@@ -141,23 +217,26 @@
             <div class="print-footer">
                 <div class="signature-line"></div>
                 <div class="professional-name" id="out-p1-profissional"></div>
-                <div>Sete Lagoas, <span id="out-p1-data"></span></div>
+                <div>Sete Lagoas - MG, <span id="out-p1-data"></span></div>
             </div>
         </div>
 
-        <div class="referral-half">
+        <!-- VIA 2 -->
+        <div class="referral-half" id="print-via-2">
             <div class="print-header">
                 <div class="print-branding">
                     <img src="../assets/logo.png" alt="Sete Lagoas Prefeitura e Secretaria Municipal da Saúde">
-                    <div class="print-branding-unit"><strong>ESF CDI 2</strong><span>Encaminhamento</span></div>
+                    <div class="print-branding-unit"><strong>ESF CDI 2</strong><span>Atenção Primária à Saúde</span></div>
                 </div>
             </div>
             
             <div class="print-type" id="out-p2-tipo">ENCAMINHAMENTO</div>
 
             <div class="print-field"><strong>Nome:</strong> <span id="out-p2-nome"></span></div>
+            <div class="print-field" id="field-p2-cns"><strong>Cartão SUS:</strong> <span id="out-p2-cns"></span></div>
             <div class="print-field"><strong>Endereço:</strong> <span id="out-p2-endereco"></span></div>
             <div class="print-field"><strong>Especialidade/Exame:</strong> <span id="out-p2-especialidade"></span></div>
+            <div class="print-field" id="field-p2-cid"><strong>Hipótese / CID:</strong> <span id="out-p2-cid"></span></div>
             
             <div class="print-field print-field-description-label"><strong>Descrição / Motivo Clínico:</strong></div>
             <div class="print-description" id="out-p2-descricao"></div>
@@ -165,7 +244,7 @@
             <div class="print-footer">
                 <div class="signature-line"></div>
                 <div class="professional-name" id="out-p2-profissional"></div>
-                <div>Sete Lagoas, <span id="out-p2-data"></span></div>
+                <div>Sete Lagoas - MG, <span id="out-p2-data"></span></div>
             </div>
         </div>
 

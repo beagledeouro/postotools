@@ -22,25 +22,37 @@
         
         <!-- COLUNA ESQUERDA: CONFIGURAÇÕES E PACIENTE -->
         <div class="left-col">
-            <!-- Dados do Médico / Unidade -->
+            <!-- Tipo de Receita -->
+            <div class="card">
+                <h2>Tipo de Documento</h2>
+                <div class="form-group">
+                    <label for="tipo-receita">Tipo de Receituário</label>
+                    <select id="tipo-receita">
+                        <option value="simples">Receituário Comum (2 Vias)</option>
+                        <option value="especial">Receituário de Controle Especial (Portaria 344/98)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Dados do Profissional / Unidade -->
             <div class="card">
                 <h2>Configurações do Profissional</h2>
                 <div class="form-group">
-                    <label>Unidade de Saúde</label>
+                    <label for="cfg-unidade">Unidade de Saúde</label>
                     <input type="text" id="cfg-unidade" value="ESF CDI 2" readonly>
                 </div>
                 <div class="form-group">
-                    <label>Nome do Médico(a)</label>
-                    <input type="text" id="cfg-medico" placeholder="Ex: Dr. João Silva">
+                    <label for="cfg-medico">Nome do Profissional</label>
+                    <input type="text" id="cfg-medico" placeholder="Ex: Dr. Leonardo Silva ou Enf. Joana Santos">
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label>Especialidade</label>
-                        <input type="text" id="cfg-esp" placeholder="Ex: Clínico Geral">
+                        <label for="cfg-esp">Especialidade / Cargo</label>
+                        <input type="text" id="cfg-esp" placeholder="Ex: Médico de Família ou Enfermeiro(a)">
                     </div>
                     <div class="form-group">
-                        <label>CRM / UF</label>
-                        <input type="text" id="cfg-crm" placeholder="Ex: 123456/SP">
+                        <label for="cfg-crm">Conselho / Registro / UF</label>
+                        <input type="text" id="cfg-crm" placeholder="Ex: CRM-MG 123456 ou COREN-MG 654321">
                     </div>
                 </div>
                 <button class="save-config" data-action="salvar-configuracoes">💾 Salvar Dados Locais</button>
@@ -50,18 +62,18 @@
             <div class="card">
                 <h2>Dados do Paciente</h2>
                 <div class="form-group">
-                    <label>Nome Completo</label>
-                    <input type="text" id="pac-nome" placeholder="Nome do paciente">
+                    <label for="pac-nome">Nome Completo</label>
+                    <input type="text" id="pac-nome" placeholder="Nome do paciente" required>
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label>Idade / Data Nasc.</label>
+                        <label for="pac-idade">Idade / Data Nasc.</label>
                         <input type="text" id="pac-idade" placeholder="Ex: 35 anos ou 10/05/1988">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Endereço (Opcional)</label>
-                    <input type="text" id="pac-end" placeholder="Rua, Número, Bairro">
+                    <label for="pac-end">Endereço (obrigatório p/ Controle Especial)</label>
+                    <input type="text" id="pac-end" placeholder="Rua, Número, Bairro, Cidade">
                 </div>
             </div>
         </div>
@@ -71,7 +83,7 @@
             
             <!-- Gestão de Modelos -->
             <div class="card model-card">
-                <h2>Carregar Modelos / Protocolos</h2>
+                <h2>Modelos / Protocolos de Prescrição</h2>
                 <div class="row model-row">
                     <select id="select-template">
                         <option value="">-- Selecione um modelo salvo --</option>
@@ -86,17 +98,20 @@
                 <h2>Adicionar Medicamento</h2>
                 
                 <div class="form-group autocomplete-wrapper">
-                    <label>Buscar Medicamento (Princípio Ativo ou Nome)</label>
-                    <input type="text" id="med-busca" placeholder="Digite para buscar (ex: Amoxicilina, Dipirona)..." autocomplete="off">
+                    <label for="med-busca">Buscar Medicamento (REMUME / Atenção Básica)</label>
+                    <input type="text" id="med-busca" placeholder="Digite para buscar (ex: Amoxicilina, Dipirona, Losartana)..." autocomplete="off">
                     <ul class="autocomplete-list" id="autocomplete-list"></ul>
                 </div>
 
                 <div class="form-group">
-                    <label>Posologia / Instruções de Uso</label>
+                    <label for="med-posologia">Posologia / Instruções de Uso</label>
                     <input type="text" id="med-posologia" placeholder="Ex: Tomar 1 comprimido de 8 em 8 horas por 5 dias.">
                 </div>
 
-                <button data-action="adicionar-medicamento">➕ Adicionar à Receita</button>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <button data-action="adicionar-medicamento">➕ Adicionar à Receita</button>
+                    <button type="button" class="custom-med-btn" id="btn-salvar-novo-med" title="Salvar o medicamento digitado na sua base pessoal">💾 Salvar na Lista Pessoal</button>
+                </div>
             </div>
 
             <!-- Lista da Receita Atual -->
@@ -112,7 +127,7 @@
                         <input type="text" id="nome-modelo" placeholder="Nome do novo modelo">
                         <button data-action="salvar-modelo">💾 Salvar como Modelo</button>
                     </div>
-                    <button class="print-btn" data-action="imprimir">🖨️ Imprimir / PDF</button>
+                    <button class="print-btn" data-action="imprimir">🖨️ Imprimir / PDF (2 Vias)</button>
                 </div>
             </div>
         </div>

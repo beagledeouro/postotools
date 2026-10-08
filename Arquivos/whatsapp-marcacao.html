@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESF CDI 2 — Lembrete de Consulta</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/whatsapp-marcacao.css">
+    <script src="../assets/js/whatsapp-marcacao.js" defer></script>
+</head>
+<body>
+
+<header class="app-header">
+    <div class="app-header-inner">
+        <h1>ESF CDI 2 — Lembrete de Consulta</h1>
+        <a class="home-link" href="../index.html">← Início</a>
+    </div>
+</header>
+
+<main class="container">
+    <h2>Lembrete e Confirmação de Agendamento</h2>
+    
+    <div class="form-grid">
+        <div class="form-group full-width">
+            <label for="paciente">Nome do Paciente:</label>
+            <input type="text" id="paciente" placeholder="Ex: Maria da Silva" autocomplete="off" required>
+        </div>
+
+        <div class="form-group">
+            <label for="telefone">WhatsApp do Paciente (com DDD):</label>
+            <input type="tel" id="telefone" placeholder="(31) 98765-4321" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+            <label for="localUnidade">Unidade de Saúde:</label>
+            <input type="text" id="localUnidade" value="ESF CDI 2">
+        </div>
+
+        <div class="form-group">
+            <label for="data">Dia da Consulta:</label>
+            <input type="date" id="data">
+        </div>
+
+        <div class="form-group">
+            <label for="horario">Horário:</label>
+            <input type="time" id="horario" value="08:00">
+        </div>
+
+        <div class="form-group full-width">
+            <label for="especialidade">Especialidade / Profissional / Exame:</label>
+            <input type="text" id="especialidade" placeholder="Ex: Consulta Médica - Dra. Camila ou Coleta de Sangue" autocomplete="off">
+        </div>
+    </div>
+
+    <div class="instructions-section">
+        <h3>Recomendações e Instruções ao Paciente:</h3>
+        <div class="instructions-grid">
+            <label class="checkbox-label">
+                <input type="checkbox" id="chkAntecedencia" checked> Chegar com 15 minutos de antecedência
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" id="chkDocs" checked> Trazer Cartão SUS e Documento com foto
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" id="chkExames" checked> Trazer receitas atuais e exames anteriores
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" id="chkJejum"> Exame de Sangue / Jejum obrigatório (8 a 12h)
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" id="chkAviso" checked> Se não puder vir, avisar para liberar a vaga
+            </label>
+        </div>
+    </div>
+
+    <div class="msg-preview-box">
+        <h4>Mensagem para envio (WhatsApp):</h4>
+        <div class="msg-preview-text" id="msgPreviewText"></div>
+    </div>
+
+    <div class="action-buttons">
+        <button type="button" class="btn-whatsapp" id="btnWhatsapp" title="Abrir conversa no WhatsApp">
+            💬 Abrir no WhatsApp
+        </button>
+        <button type="button" class="btn-copy" id="btnCopiar" title="Copiar texto para colar em qualquer lugar">
+            📋 Copiar Texto
+        </button>
+        <button type="button" class="btn-png" id="btnDownload" title="Baixar imagem em formato de cartão">
+            🖼️ Baixar Cartão (PNG)
+        </button>
+    </div>
+
+    <div id="feedbackToast" class="feedback-toast"></div>
+
+    <div class="preview-container">
+        <label class="preview-label">Pré-visualização do Cartão Gráfico:</label>
+        <canvas id="cartaoCanvas" width="600" height="350"></canvas>
+    </div>
+</main>
+
+</body>
+</html>

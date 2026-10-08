@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacinação & Puericultura — ESF CDI 2</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/calendario_vacinal.css">
+    <script src="../assets/js/vendor/html2canvas.min.js"></script>
+    <script src="../assets/js/vendor/jspdf.umd.min.js"></script>
+    <script src="../assets/js/exportar-pdf.js"></script>
+    <script src="../assets/js/calendario_vacinal.js" defer></script>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="app-header-inner">
+            <div>
+                <h1>ESF CDI 2 — Vacinação & Puericultura</h1>
+                <p>Calendário Vacinal Oficial (PNI) e Cronograma de Consultas da Criança</p>
+            </div>
+            <a class="home-link" href="../index.html">← Início</a>
+        </div>
+    </header>
+
+    <main class="guide-container">
+        <div class="page-header">
+            <h2>Acompanhamento Infantil & Imunização</h2>
+            <p>Selecione abaixo para consultar o Calendário Vacinal ou organizar as datas das consultas de Puericultura com impressão.</p>
+        </div>
+
+        <div class="tabs">
+            <button type="button" class="tab-btn active" data-tab="tab-puericultura">👶 Datas para Puericultura (Impressão)</button>
+            <button type="button" class="tab-btn" data-tab="tab-vacinas">💉 Calendário de Vacinação (PNI)</button>
+        </div>
+
+        <!-- ========================================================
+             1. ORGANIZAÇÃO DE DATAS PARA PUERICULTURA
+             ======================================================== -->
+        <section id="tab-puericultura" class="guide-section active">
+            <div class="section-head">
+                <h3>👶 Organização de Datas para Puericultura</h3>
+                <div class="section-actions">
+                    <button type="button" class="btn-action btn-primary" id="btn-imprimir-pueri">🖨️ Imprimir Cronograma (A4)</button>
+                    <button type="button" class="btn-action btn-success" id="btn-pdf-pueri">💾 Baixar PDF</button>
+                    <button type="button" class="btn-action" id="btn-exemplo-pueri">✨ Preencher Exemplo</button>
+                    <button type="button" class="btn-action" id="btn-limpar-pueri">🔄 Limpar</button>
+                </div>
+            </div>
+
+            <!-- Formulário do Paciente / Criança -->
+            <div class="patient-form-card">
+                <div class="patient-form-title">
+                    <span>Identificação da Criança & Família</span>
+                    <span class="age-badge" id="badge-idade-atual">Informe a data de nascimento</span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2 1 240px;">
+                        <label for="pueri-nome">Nome Completo da Criança</label>
+                        <input type="text" id="pueri-nome" placeholder="Ex: Arthur Gabriel Silva dos Santos">
+                    </div>
+                    <div class="form-group" style="flex: 1 1 160px;">
+                        <label for="pueri-nasc">Data de Nascimento *</label>
+                        <input type="date" id="pueri-nasc" required>
+                    </div>
+                    <div class="form-group" style="flex: 1 1 120px;">
+                        <label for="pueri-sexo">Sexo</label>
+                        <select id="pueri-sexo">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2 1 240px;">
+                        <label for="pueri-mae">Nome da Mãe / Responsável</label>
+                        <input type="text" id="pueri-mae" placeholder="Ex: Mariana Silva dos Santos">
+                    </div>
+                    <div class="form-group" style="flex: 1 1 160px;">
+                        <label for="pueri-cns">Cartão SUS (CNS)</label>
+                        <input type="text" id="pueri-cns" placeholder="000 0000 0000 0000">
+                    </div>
+                    <div class="form-group" style="flex: 1 1 140px;">
+                        <label for="pueri-prontuario">Nº Prontuário / CPF</label>
+                        <input type="text" id="pueri-prontuario" placeholder="Ex: 12345">
+                    </div>
+                    <div class="form-group" style="flex: 1 1 150px;">
+                        <label for="pueri-tel">Telefone / WhatsApp</label>
+                        <input type="text" id="pueri-tel" placeholder="(31) 90000-0000">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2 1 300px;">
+                        <label for="pueri-obs">Dados do Nascimento / Histórico Perinatal (Opcional)</label>
+                        <input type="text" id="pueri-obs" placeholder="Ex: Parto normal, PN: 3.200g, 49cm, Apgar 9/10, Teste do pezinho feito">
+                    </div>
+                    <div class="form-group" style="flex: 1 1 200px;">
+                        <label for="pueri-prof">Profissional Responsável (ESF CDI 2)</label>
+                        <input type="text" id="pueri-prof" value="Equipe ESF CDI 2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <strong>Protocolo de Puericultura (Ministério da Saúde):</strong> As datas são calculadas automaticamente a partir do nascimento. É possível ajustar as datas de agendamento conforme a escala da unidade (ex: dias fixos de puericultura), atualizar o status e imprimir o cartão com a grade de acompanhamento e orientações para os pais.
+            </div>
+
+            <!-- Tabela Interativa de Puericultura -->
+            <div class="table-responsive">
+                <table id="tabelaPuericultura">
+                    <thead>
+                        <tr>
+                            <th style="width: 17%;">Consulta / Idade</th>
+                            <th style="width: 14%;">Data Prevista</th>
+                            <th style="width: 15%;">Data Agendada</th>
+                            <th style="width: 12%;">Status</th>
+                            <th style="width: 28%;">Marcos do Desenvolvimento & Vacinas</th>
+                            <th style="width: 14%;">Medições / Notas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela-puericultura">
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 24px; color: var(--muted);">
+                                Preencha a data de nascimento acima para calcular automaticamente todas as datas de puericultura.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             2. CALENDÁRIO VACINAL OFICIAL (PNI)
+             ======================================================== -->
+        <section id="tab-vacinas" class="guide-section">
+            <div class="section-head">
+                <h3>💉 Calendário Nacional de Vacinação (PNI)</h3>
+                <div class="section-actions">
+                    <button type="button" class="btn-action btn-primary" id="btn-imprimir-vacinas">🖨️ Imprimir Calendário Vacinal</button>
+                </div>
+            </div>
+
+            <div class="search-toolbar">
+                <div class="search-box">
+                    <input type="text" id="filtroVacina" placeholder="Buscar por vacina, idade, reforço ou doença (ex: BCG, 2 meses, Meningo, Febre Amarela, Gestante)...">
+                </div>
+                <div class="filter-chips">
+                    <button type="button" class="chip active" data-filter="todos">Todas as Fases</button>
+                    <button type="button" class="chip" data-filter="crianca">👶 Criança (0 a 4 anos)</button>
+                    <button type="button" class="chip" data-filter="adolescente">🧑 Adolescente (9 a 14 anos)</button>
+                    <button type="button" class="chip" data-filter="gestante">🤰 Gestantes</button>
+                    <button type="button" class="chip" data-filter="adulto">👵 Adultos & Idosos</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="tabelaVacinas">
+                    <thead>
+                        <tr>
+                            <th style="width: 16%;">Idade / Fase</th>
+                            <th style="width: 28%;">Vacina</th>
+                            <th style="width: 16%;">Dose</th>
+                            <th style="width: 40%;">Doenças Evitadas / Observações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Criança -->
+                        <tr data-grupo="crianca">
+                            <td><strong>Ao nascer</strong></td>
+                            <td>BCG</td>
+                            <td>Dose única</td>
+                            <td>Formas graves de tuberculose (miliar e meníngea)</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>Ao nascer</strong></td>
+                            <td>Hepatite B</td>
+                            <td>Dose ao nascer</td>
+                            <td>Hepatite B (ideal aplicar nas primeiras 24 horas de vida)</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>2 meses</strong></td>
+                            <td>Pentavalente + VIP + Pneumo 10 + Rotavírus</td>
+                            <td>1ª Dose</td>
+                            <td>Difteria, Tétano, Coqueluche, Hib, Hep B (Penta); Poliomielite (VIP); Pneumonias/Meningites (Pneumo 10); Diarreia por Rotavírus</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>3 meses</strong></td>
+                            <td>Meningocócica C (Conjugada)</td>
+                            <td>1ª Dose</td>
+                            <td>Doença meningocócica sorogrupo C (meningite e meningococcemia)</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>4 meses</strong></td>
+                            <td>Pentavalente + VIP + Pneumo 10 + Rotavírus</td>
+                            <td>2ª Dose</td>
+                            <td>Segunda dose do esquema básico primário</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>5 meses</strong></td>
+                            <td>Meningocócica C (Conjugada)</td>
+                            <td>2ª Dose</td>
+                            <td>Segunda dose do esquema básico</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>6 meses</strong></td>
+                            <td>Pentavalente + VIP</td>
+                            <td>3ª Dose</td>
+                            <td>Conclusão do esquema primário de Penta e Poliomielite (VIP)</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>9 meses</strong></td>
+                            <td>Febre Amarela</td>
+                            <td>Dose inicial</td>
+                            <td>Febre Amarela (reforço programado aos 4 anos)</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>12 meses (1 ano)</strong></td>
+                            <td>Tríplice Viral + Pneumo 10 + Meningo C</td>
+                            <td>1ª Dose / Reforços</td>
+                            <td>Sarampo, Caxumba e Rubéola (Tríplice Viral); 1º Reforço de Pneumo 10 e Meningo C</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>15 meses</strong></td>
+                            <td>DTP + VOP/VIP + Hepatite A + Tetra Viral</td>
+                            <td>1º Reforço / Única</td>
+                            <td>1º reforço DTP e Polio; Dose única de Hepatite A; Tetra Viral (ou Tríplice + Varicela)</td>
+                        </tr>
+                        <tr data-grupo="crianca">
+                            <td><strong>4 anos</strong></td>
+                            <td>DTP + VOP/VIP + Febre Amarela + Varicela</td>
+                            <td>2º Reforço</td>
+                            <td>2º reforço de DTP e Polio; Reforço Febre Amarela; 2ª dose Varicela atenuada</td>
+                        </tr>
+
+                        <!-- Adolescente -->
+                        <tr data-grupo="adolescente">
+                            <td><strong>9 a 14 anos</strong></td>
+                            <td>HPV Quadrivalente</td>
+                            <td>Dose única</td>
+                            <td>Câncer de colo do útero, vulva, pênis, ânus e verrugas genitais (Meninos e meninas)</td>
+                        </tr>
+                        <tr data-grupo="adolescente">
+                            <td><strong>11 a 14 anos</strong></td>
+                            <td>Meningocócica ACWY</td>
+                            <td>Dose única / Reforço</td>
+                            <td>Meningites e infecções generalizadas graves causadas pelos sorogrupos A, C, W e Y</td>
+                        </tr>
+
+                        <!-- Gestante -->
+                        <tr data-grupo="gestante">
+                            <td><strong>Gestantes</strong></td>
+                            <td>dTpa (Acelular)</td>
+                            <td>1 dose a cada gestação</td>
+                            <td>A partir da 20ª semana gestacional (proteção passiva do recém-nascido contra coqueluche)</td>
+                        </tr>
+                        <tr data-grupo="gestante">
+                            <td><strong>Gestantes</strong></td>
+                            <td>Hepatite B + dT + Influenza</td>
+                            <td>Conforme histórico</td>
+                            <td>Completar esquema de dT (3 doses se não vacinada) e vacinação anual contra Influenza</td>
+                        </tr>
+
+                        <!-- Adultos e Idosos -->
+                        <tr data-grupo="adulto">
+                            <td><strong>Adultos (20 a 59 anos)</strong></td>
+                            <td>dT (Dupla Adulto)</td>
+                            <td>Reforço a cada 10 anos</td>
+                            <td>Difteria e Tétano (reforço a cada 5 anos em caso de ferimentos graves ou gestação)</td>
+                        </tr>
+                        <tr data-grupo="adulto">
+                            <td><strong>Adultos (20 a 59 anos)</strong></td>
+                            <td>Febre Amarela + Hepatite B + Tríplice Viral</td>
+                            <td>Conforme histórico</td>
+                            <td>Atualização de doses em atraso conforme carteira de vacinação</td>
+                        </tr>
+                        <tr data-grupo="adulto">
+                            <td><strong>Idosos (60+ anos)</strong></td>
+                            <td>Influenza + Pneumo 23</td>
+                            <td>Anual / Específica</td>
+                            <td>Gripe anual em campanha; Pneumocócica 23-valente para institucionalizados e acamados</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========================================================
+         ÁREA DE IMPRESSÃO A4: CRONOGRAMA DE PUERICULTURA
+         ======================================================== -->
+    <div id="area-impressao-puericultura" class="print-sheet active-print">
+        <div class="print-header">
+            <img src="../assets/logo.png" alt="Prefeitura de Sete Lagoas">
+            <div class="print-header-text">
+                <h1>Prefeitura Municipal de Sete Lagoas — Secretaria de Saúde</h1>
+                <p>Estratégia Saúde da Família (ESF) CDI 2 — Atenção Primária à Saúde</p>
+            </div>
+        </div>
+
+        <div class="print-doc-title">
+            <h2>Cronograma & Cartão de Agendamento de Puericultura</h2>
+            <span>Acompanhamento do Crescimento e Desenvolvimento Infantil (Ministério da Saúde / SBP)</span>
+        </div>
+
+        <div class="print-patient-box">
+            <div class="print-patient-grid">
+                <div><strong>Criança:</strong> <span id="print-pueri-nome">Arthur Gabriel Silva dos Santos</span></div>
+                <div><strong>Nascimento:</strong> <span id="print-pueri-nasc">15/05/2026</span></div>
+                <div><strong>Idade Atual:</strong> <span id="print-pueri-idade">2 meses e 10 dias</span></div>
+                <div><strong>Mãe/Resp.:</strong> <span id="print-pueri-mae">Mariana Silva dos Santos</span></div>
+                <div><strong>Cartão SUS:</strong> <span id="print-pueri-cns">—</span></div>
+                <div><strong>Prontuário:</strong> <span id="print-pueri-prontuario">—</span></div>
+                <div><strong>Telefone:</strong> <span id="print-pueri-tel">—</span></div>
+                <div><strong>Sexo:</strong> <span id="print-pueri-sexo">Masculino</span></div>
+                <div><strong>Unidade:</strong> <span>ESF CDI 2</span></div>
+            </div>
+        </div>
+
+        <div id="print-pueri-obs-box" class="print-notes-box" style="display: none;">
+            <strong>Histórico Perinatal / Observações:</strong> <span id="print-pueri-obs"></span>
+        </div>
+
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th style="width: 17%;">Consulta / Idade</th>
+                    <th style="width: 15%; text-align: center;">Data Prevista / Agendada</th>
+                    <th style="width: 38%;">Ações Clínicas & Vacinas do Período</th>
+                    <th style="width: 16%;">Medições</th>
+                    <th style="width: 14%; text-align: center;">Data Realizada / Visto</th>
+                </tr>
+            </thead>
+            <tbody id="print-tabela-puericultura-corpo">
+                <!-- Inserido dinamicamente via javascript -->
+            </tbody>
+        </table>
+
+        <div class="print-notes-box">
+            <strong>Orientações aos Pais & Cuidados Essenciais (ESF CDI 2):</strong><br>
+            • <strong>Aleitamento Materno:</strong> Exclusivo até os 6 meses (sem água, chás ou outros alimentos). A partir dos 6 meses, iniciar introdução de alimentos saudáveis in natura e manter o leite materno até 2 anos ou mais.<br>
+            • <strong>Vacinas:</strong> Traga a Caderneta de Vacinação em todas as consultas da UBS. Mantenha as vacinas em dia mesmo que a criança esteja assintomática.<br>
+            • <strong>Suplementação:</strong> Administrar Vitamina D (400 UI/dia) do 1º ao 12º mês; Sulfato Ferroso profilático a partir dos 6 meses conforme prescrição.<br>
+            • <strong>Telas Digitais:</strong> ZERO telas (celular, TV, tablet) recomendadas até os 2 anos de vida para proteger a visão e o desenvolvimento da fala.<br>
+            • <strong>Sinais de Alerta:</strong> Febre (>37,8°C), dificuldade de respirar/gemência, recusa total das mamadas ou prostração — procurar imediatamente atendimento médico na UBS ou UPA.
+        </div>
+
+        <div class="print-footer-signatures">
+            <div class="sign-box">
+                <div class="sign-line"></div>
+                <div>Assinatura do Responsável</div>
+            </div>
+            <div class="sign-box">
+                <div class="sign-line"></div>
+                <div id="print-pueri-prof-assinatura">Equipe de Saúde — ESF CDI 2</div>
+                <div style="font-size: 7pt; color: #555;">Sete Lagoas - MG</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================
+         ÁREA DE IMPRESSÃO A4: CALENDÁRIO VACINAL (PNI)
+         ======================================================== -->
+    <div id="area-impressao-vacinas" class="print-sheet print-vacinas">
+        <div class="print-header">
+            <img src="../assets/logo.png" alt="Prefeitura de Sete Lagoas">
+            <div class="print-header-text">
+                <h1>Prefeitura Municipal de Sete Lagoas — Secretaria de Saúde</h1>
+                <p>Estratégia Saúde da Família (ESF) CDI 2 — Calendário Nacional de Vacinação (PNI)</p>
+            </div>
+        </div>
+
+        <div class="print-doc-title">
+            <h2>Calendário Oficial de Vacinação — PNI / Ministério da Saúde</h2>
+            <span>Referência para Imunização da Criança, Adolescente, Adulto, Gestante e Idoso</span>
+        </div>
+
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Idade / Fase</th>
+                    <th style="width: 28%;">Vacina</th>
+                    <th style="width: 15%;">Dose</th>
+                    <th style="width: 42%;">Doenças Evitadas / Observações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Ao nascer</strong></td><td>BCG</td><td>Dose única</td><td>Formas graves de tuberculose (miliar e meníngea)</td></tr>
+                <tr><td><strong>Ao nascer</strong></td><td>Hepatite B</td><td>Dose ao nascer</td><td>Hepatite B (ideal nas primeiras 24 horas de vida)</td></tr>
+                <tr><td><strong>2 meses</strong></td><td>Pentavalente + VIP + Pneumo 10 + Rotavírus</td><td>1ª Dose</td><td>Difteria, Tétano, Coqueluche, Hib, Hep B; Poliomielite; Pneumonias e Meningites; Diarreia Rotavírus</td></tr>
+                <tr><td><strong>3 meses</strong></td><td>Meningocócica C (Conjugada)</td><td>1ª Dose</td><td>Doença meningocócica sorogrupo C</td></tr>
+                <tr><td><strong>4 meses</strong></td><td>Pentavalente + VIP + Pneumo 10 + Rotavírus</td><td>2ª Dose</td><td>2ª dose do esquema básico primário</td></tr>
+                <tr><td><strong>5 meses</strong></td><td>Meningocócica C (Conjugada)</td><td>2ª Dose</td><td>2ª dose do esquema básico</td></tr>
+                <tr><td><strong>6 meses</strong></td><td>Pentavalente + VIP</td><td>3ª Dose</td><td>Conclusão do esquema primário de Penta e Poliomielite</td></tr>
+                <tr><td><strong>9 meses</strong></td><td>Febre Amarela</td><td>Dose inicial</td><td>Febre Amarela (reforço aos 4 anos)</td></tr>
+                <tr><td><strong>12 meses (1 ano)</strong></td><td>Tríplice Viral + Pneumo 10 + Meningo C</td><td>1ª Dose / Reforços</td><td>Sarampo, Caxumba, Rubéola; Reforço de Pneumo 10 e Meningo C</td></tr>
+                <tr><td><strong>15 meses</strong></td><td>DTP + VOP/VIP + Hepatite A + Tetra Viral</td><td>1º Reforço / Única</td><td>1º reforço DTP e Polio; Hepatite A (dose única); Tetra Viral (ou Tríplice + Varicela)</td></tr>
+                <tr><td><strong>4 anos</strong></td><td>DTP + VOP/VIP + Febre Amarela + Varicela</td><td>2º Reforço</td><td>2º reforço DTP e Polio; Reforço Febre Amarela; 2ª dose Varicela</td></tr>
+                <tr><td><strong>9 a 14 anos</strong></td><td>HPV Quadrivalente</td><td>Dose única</td><td>Câncer de colo do útero, vulva, pênis, ânus e verrugas genitais (Meninos e Meninas)</td></tr>
+                <tr><td><strong>11 a 14 anos</strong></td><td>Meningocócica ACWY</td><td>Dose única / Reforço</td><td>Meningites e infecções generalizadas graves pelos sorogrupos A, C, W e Y</td></tr>
+                <tr><td><strong>Gestantes</strong></td><td>dTpa (Acelular)</td><td>1 dose a cada gestação</td><td>A partir da 20ª semana gestacional (protege o recém-nascido da coqueluche)</td></tr>
+                <tr><td><strong>Gestantes</strong></td><td>Hepatite B + dT + Influenza</td><td>Conforme histórico</td><td>Completar esquema de 3 doses de dT e dose anual da gripe</td></tr>
+                <tr><td><strong>Adultos</strong></td><td>dT (Dupla Adulto)</td><td>Reforço a cada 10 anos</td><td>Difteria e Tétano (a cada 5 anos em caso de ferimento grave ou gravidez)</td></tr>
+                <tr><td><strong>Idosos (60+ anos)</strong></td><td>Influenza + Pneumo 23</td><td>Anual / Específica</td><td>Vacinação anual de gripe e Pneumo 23 para acamados/institucionalizados</td></tr>
+            </tbody>
+        </table>
+
+        <div style="font-size: 7.5pt; color: #475569; text-align: center; margin-top: 12px; border-top: 1px solid #cbd5e1; padding-top: 6px;">
+            ESF CDI 2 — Rua Expedicionário Alberto Martins, Bairro CDI II, Sete Lagoas - MG | Telefone da Unidade: (31) 3773-0000
+        </div>
+    </div>
+
+</body>
+</html>

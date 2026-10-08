@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras Clínicas — ESF CDI 2</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/calculadoras.css">
+    <script src="../assets/js/calculadoras.js" defer></script>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="app-header-inner">
+            <h1>ESF CDI 2 — Calculadoras Clínicas da APS</h1>
+            <a class="home-link" href="../index.html">← Início</a>
+        </div>
+    </header>
+
+    <main class="calc-container">
+        <div class="page-title">
+            <h2>Ferramentas de Apoio à Decisão Clínica</h2>
+            <p>Calculadoras para uso na consulta médica e de enfermagem na Atenção Primária à Saúde.</p>
+        </div>
+
+        <!-- Abas de Navegação -->
+        <div class="tabs">
+            <button type="button" class="tab-btn active" data-tab="tab-obstetrica">🤰 Idade Gestacional & DPP</button>
+            <button type="button" class="tab-btn" data-tab="tab-imc">⚖️ IMC (Adulto e Idoso)</button>
+            <button type="button" class="tab-btn" data-tab="tab-clearance">🧪 Função Renal (Cockcroft-Gault)</button>
+            <button type="button" class="tab-btn" data-tab="tab-cv">❤️ Risco Cardiovascular</button>
+        </div>
+
+        <!-- 1. ABA OBSTÉTRICA -->
+        <section id="tab-obstetrica" class="calc-card active">
+            <h3>Calculadora de Idade Gestacional e Data Provável do Parto</h3>
+            <p class="desc">Cálculo pela Data da Última Menstruação (Regra de Naegele) e condutas preconizadas pelo Ministério da Saúde.</p>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="dumInput">Data da Última Menstruação (DUM):</label>
+                    <input type="date" id="dumInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="dataRefObstetrica">Data de Referência da Consulta:</label>
+                    <input type="date" id="dataRefObstetrica">
+                </div>
+            </div>
+            
+            <button type="button" class="btn-calc" id="btnCalcObstetrica">Calcular Idade Gestacional</button>
+
+            <div id="resObstetrica" class="result-box">
+                <h4>Resultado Obstétrico</h4>
+                <div class="result-grid">
+                    <div class="result-item">
+                        <span class="label">Idade Gestacional Atual</span>
+                        <span class="value" id="igResultado">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Data Provável do Parto (DPP)</span>
+                        <span class="value" id="dppResultado">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Trimestre Gestacional</span>
+                        <span class="value" id="trimestreResultado">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Dias Corridos</span>
+                        <span class="value" id="diasResultado">-</span>
+                    </div>
+                </div>
+                <div id="interpObstetrica" class="result-interpretation"></div>
+            </div>
+        </section>
+
+        <!-- 2. ABA IMC -->
+        <section id="tab-imc" class="calc-card">
+            <h3>Cálculo de Índice de Massa Corporal (IMC)</h3>
+            <p class="desc">Classificação diferenciada pela OMS para adultos e critérios de Lipschitz para idosos (≥ 60 anos).</p>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="pesoInput">Peso do Paciente (kg):</label>
+                    <input type="number" id="pesoInput" step="0.1" placeholder="Ex: 72.5">
+                </div>
+                <div class="form-group">
+                    <label for="alturaInput">Altura (cm ou metros):</label>
+                    <input type="number" id="alturaInput" step="0.01" placeholder="Ex: 170 ou 1.70">
+                </div>
+                <div class="form-group">
+                    <label for="idadeInput">Idade (anos):</label>
+                    <input type="number" id="idadeInput" placeholder="Ex: 45">
+                </div>
+                <div class="form-group" style="justify-content: flex-end; padding-bottom: 8px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="chkIdoso" style="width: 20px; height: 20px; accent-color: var(--brand);">
+                        Paciente Idoso (≥ 60 anos)
+                    </label>
+                </div>
+            </div>
+
+            <button type="button" class="btn-calc" id="btnCalcIMC">Calcular IMC</button>
+
+            <div id="resIMC" class="result-box">
+                <h4>Resultado Antropométrico</h4>
+                <div class="result-grid">
+                    <div class="result-item">
+                        <span class="label">IMC Calculado</span>
+                        <span class="value" id="imcResultado">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Classificação Nutricional</span>
+                        <span class="value" id="classifResultado">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Faixa de Peso Recomendada</span>
+                        <span class="value" id="pesoIdealResultado">-</span>
+                    </div>
+                </div>
+                <div id="interpIMC" class="result-interpretation"></div>
+            </div>
+        </section>
+
+        <!-- 3. ABA FUNÇÃO RENAL -->
+        <section id="tab-clearance" class="calc-card">
+            <h3>Taxa de Filtração Glomerular / Clearance de Creatinina</h3>
+            <p class="desc">Estimativa do Clearance de Creatinina pela equação de Cockcroft-Gault para ajuste posológico e estadiamento da DRC.</p>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="crIdade">Idade (anos):</label>
+                    <input type="number" id="crIdade" placeholder="Ex: 62">
+                </div>
+                <div class="form-group">
+                    <label for="crPeso">Peso Atual (kg):</label>
+                    <input type="number" id="crPeso" step="0.1" placeholder="Ex: 68">
+                </div>
+                <div class="form-group">
+                    <label for="crSérica">Creatinina Sérica (mg/dL):</label>
+                    <input type="number" id="crSérica" step="0.01" placeholder="Ex: 1.2">
+                </div>
+                <div class="form-group">
+                    <label for="crSexo">Sexo Biológico:</label>
+                    <select id="crSexo">
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino (fator 0.85)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" class="btn-calc" id="btnCalcClearance">Calcular Clearance</button>
+
+            <div id="resClearance" class="result-box">
+                <h4>Avaliação da Função Renal</h4>
+                <div class="result-grid">
+                    <div class="result-item">
+                        <span class="label">Clearance Estimado</span>
+                        <span class="value" id="clcrResultado">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Estágio da DRC</span>
+                        <span class="value" id="estagioResultado">-</span>
+                    </div>
+                </div>
+                <div id="interpClearance" class="result-interpretation"></div>
+            </div>
+        </section>
+
+        <!-- 4. ABA RISCO CARDIOVASCULAR -->
+        <section id="tab-cv" class="calc-card">
+            <h3>Escore de Risco Cardiovascular Global (Atenção Básica)</h3>
+            <p class="desc">Estratificação simplificada para definição de metas pressóricas, lipídicas e intervenção com estatinas.</p>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="cvIdade">Idade do Paciente:</label>
+                    <input type="number" id="cvIdade" placeholder="Ex: 55">
+                </div>
+                <div class="form-group">
+                    <label for="cvPas">Pressão Arterial Sistólica (PAS em mmHg):</label>
+                    <input type="number" id="cvPas" placeholder="Ex: 140">
+                </div>
+                <div class="form-group">
+                    <label for="cvFuma">Tabagismo Atual:</label>
+                    <select id="cvFuma">
+                        <option value="nao">Não fumante</option>
+                        <option value="sim">Fumante ativo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cvDm">Diagnóstico de Diabetes Mellitus:</label>
+                    <select id="cvDm">
+                        <option value="nao">Não</option>
+                        <option value="sim">Sim</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cvColesterol">Dislipidemia / Colesterol Elevado:</label>
+                    <select id="cvColesterol">
+                        <option value="nao">Não / Controlado</option>
+                        <option value="sim">Sim (LDL alto / CT > 200)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" class="btn-calc" id="btnCalcCV">Estratificar Risco</button>
+
+            <div id="resCV" class="result-box">
+                <h4>Classificação de Risco</h4>
+                <div class="result-grid">
+                    <div class="result-item" style="grid-column: 1 / -1;">
+                        <span class="label">Classificação</span>
+                        <span class="value" id="cvRiscoResultado">-</span>
+                    </div>
+                </div>
+                <div id="interpCV" class="result-interpretation"></div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

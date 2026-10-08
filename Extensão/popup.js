@@ -47,6 +47,58 @@ botoesAcao.forEach(botao => {
     botao.addEventListener('click', () => executarAcao(botao.dataset.action));
 });
 
+const botoesFerramenta = [...document.querySelectorAll('[data-tool]')];
+
+async function abrirFerramenta(ferramenta) {
+    botoesFerramenta.forEach(b => { b.disabled = true; });
+    statusDiv.textContent = 'Extraindo dados para a ferramenta...';
+    try {
+        const dados = await obterDadosPaciente();
+        const enderecoCompleto = [dados.endereco, dados.numero, dados.bairro].filter(Boolean).join(', ');
+
+        const params = new URLSearchParams();
+        let arquivoDestino = '';
+
+        if (ferramenta === 'receita') {
+            params.set('nome', dados.nome || '');
+            params.set('idade', dados.dataNasc || '');
+            params.set('endereco', enderecoCompleto);
+            arquivoDestino = 'receita.html';
+        } else if (ferramenta === 'encaminhamento') {
+            params.set('nome', dados.nome || '');
+            params.set('cns', dados.cns || '');
+            params.set('endereco', enderecoCompleto);
+            arquivoDestino = 'encaminhamento.html';
+        } else if (ferramenta === 'whatsapp') {
+            params.set('paciente', dados.nome || '');
+            params.set('telefone', (dados.telefone || '').replace(/\D/g, ''));
+            arquivoDestino = 'whatsapp-marcacao.html';
+        } else if (ferramenta === 'puericultura') {
+            params.set('nome', dados.nome || '');
+            params.set('cns', dados.cns || '');
+            params.set('nascimento', dados.dataNasc || '');
+            params.set('mae', dados.mae || '');
+            arquivoDestino = 'calendario_vacinal.html';
+        }
+
+        const baseUrl = localStorage.getItem('posto_base_url') || 'http://localhost:8080/Arquivos/';
+        const urlCompleta = `${baseUrl.replace(/\/+$/, '')}/${arquivoDestino}?${params.toString()}`;
+
+        // Tenta abrir em nova aba
+        chrome.tabs.create({ url: urlCompleta });
+        statusDiv.textContent = `Abrindo ${arquivoDestino}...`;
+    } catch (erro) {
+        statusDiv.textContent = erro.message || 'Erro ao extrair dados.';
+        console.error(erro);
+    } finally {
+        botoesFerramenta.forEach(b => { b.disabled = false; });
+    }
+}
+
+botoesFerramenta.forEach(botao => {
+    botao.addEventListener('click', () => abrirFerramenta(botao.dataset.tool));
+});
+
 // 1. EXTRAÇÃO DE DADOS 
 function extrairDadosGMUS() {
     const extrairTexto = (seletor) => {

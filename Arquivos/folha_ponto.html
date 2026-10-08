@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folha de Ponto Online — ESF CDI 2</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/folha_ponto.css">
+
+    <!-- Bibliotecas e Template do PDF -->
+    <script src="../assets/js/vendor/pdf-lib.min.js"></script>
+    <script src="../assets/js/folha_ponto_template.js"></script>
+    <script src="../assets/js/folha_ponto.js" defer></script>
+</head>
+<body>
+
+    <!-- Cabeçalho Institucional -->
+    <header class="app-header">
+        <div class="app-header-inner">
+            <div>
+                <h1>ESF CDI 2 — Folha de Ponto Online</h1>
+                <p>Preenchimento Digital de Justificativa de Frequência &bull; Atenção Primária Sete Lagoas</p>
+            </div>
+            <a class="home-link" href="../index.html">← Início</a>
+        </div>
+    </header>
+
+    <main class="folha-container">
+        
+        <!-- Banner Informativo e Acesso ao Modelo Oficial -->
+        <section class="info-banner">
+            <div class="info-banner-text">
+                <h2>Declaração Mensal de Frequência e Justificativa de Horários</h2>
+                <p>Preencha os campos abaixo e utilize os botões de automação para completar os dias úteis com 1 clique. O PDF gerado preserva fielmente o modelo oficial da Prefeitura Municipal de Sete Lagoas.</p>
+            </div>
+            <div class="info-banner-actions">
+                <a href="Folha_de_Ponto_Preenchivel.pdf" download="Folha_de_Ponto_Modelo_Sete_Lagoas.pdf" class="btn-secondary-link" title="Baixar modelo em branco para preenchimento manual ou impressão">
+                    <span class="material-icons">file_download</span> Baixar PDF em Branco
+                </a>
+                <a href="Folha_de_Ponto_Preenchivel.pdf" target="_blank" rel="noopener" class="btn-secondary-link" title="Abrir modelo PDF em nova aba">
+                    <span class="material-icons">visibility</span> Abrir PDF Original
+                </a>
+            </div>
+        </section>
+
+        <!-- 1. Dados do Funcionário e Período de Referência -->
+        <section class="control-card">
+            <div class="card-title-bar">
+                <h3><span class="material-icons">person</span> 1. Dados do Servidor &bull; Referência do Mês</h3>
+                <span class="badge-info">Salvo automaticamente no navegador</span>
+            </div>
+
+            <div class="form-row-grid">
+                <div class="input-box" style="grid-column: span 2;">
+                    <label for="nomeFuncionario">Nome Completo do Funcionário *</label>
+                    <input type="text" id="nomeFuncionario" placeholder="Ex.: Maria da Conceição Silva" required autocomplete="name">
+                    <span class="input-hint">Será inserido na linha "Eu, [Nome], matrícula..."</span>
+                </div>
+
+                <div class="input-box">
+                    <label for="matriculaFuncionario">Matrícula *</label>
+                    <input type="text" id="matriculaFuncionario" placeholder="Ex.: 123456" required>
+                    <span class="input-hint">Número de matrícula do servidor</span>
+                </div>
+
+                <div class="input-box">
+                    <label for="localPadrao">Local de Lotação Principal</label>
+                    <input type="text" id="localPadrao" value="ESF CDI 2" placeholder="Ex.: ESF CDI 2">
+                    <span class="input-hint">Padrão aplicado nas colunas de Local</span>
+                </div>
+            </div>
+
+            <div class="form-row-grid">
+                <div class="input-box">
+                    <label for="mesReferencia">Mês de Referência *</label>
+                    <select id="mesReferencia"></select>
+                    <span class="input-hint">Mês correspondente à carga horária cumprida</span>
+                </div>
+
+                <div class="input-box">
+                    <label for="anoReferencia">Ano de Referência</label>
+                    <input type="number" id="anoReferencia" value="2026" min="2024" max="2035">
+                    <span class="input-hint">Exercício informado na folha oficial</span>
+                </div>
+
+                <div class="input-box">
+                    <label for="diaEmissao">Dia da Declaração</label>
+                    <input type="number" id="diaEmissao" min="1" max="31" placeholder="Ex.: 08">
+                    <span class="input-hint">Sete Lagoas, [Dia] de...</span>
+                </div>
+
+                <div class="input-box">
+                    <label for="mesEmissao">Mês da Declaração</label>
+                    <select id="mesEmissao"></select>
+                    <span class="input-hint">... de [Mês] de 2026</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Painel de Horário Padrão & Automação Inteligente -->
+        <section class="control-card">
+            <div class="card-title-bar">
+                <h3><span class="material-icons">schedule</span> 2. Horário Padrão &bull; Assistente de Preenchimento Rápido</h3>
+                <span class="badge-info">Preencha dias úteis em 1 clique</span>
+            </div>
+
+            <div class="automation-header">
+                <span><span class="material-icons">tune</span> Carga Horária / Presets Comuns:</span>
+                <div class="preset-pills">
+                    <button type="button" class="preset-btn active" data-preset="40h_manha">40h (07h às 16h / Almoço 11h-12h)</button>
+                    <button type="button" class="preset-btn" data-preset="40h_tarde">40h (08h às 17h / Almoço 12h-13h)</button>
+                    <button type="button" class="preset-btn" data-preset="30h">30h (07h às 13h)</button>
+                    <button type="button" class="preset-btn" data-preset="20h">20h (07h às 11h)</button>
+                </div>
+            </div>
+
+            <div class="form-row-grid" style="margin-top: 12px;">
+                <div class="input-box">
+                    <label for="stdEntrada">Entrada</label>
+                    <input type="text" id="stdEntrada" value="07:00" placeholder="07:00" maxlength="5">
+                </div>
+                <div class="input-box">
+                    <label for="stdAlmocoInicio">Almoço (Saída)</label>
+                    <input type="text" id="stdAlmocoInicio" value="11:00" placeholder="11:00" maxlength="5">
+                </div>
+                <div class="input-box">
+                    <label for="stdAlmocoFim">Almoço (Retorno)</label>
+                    <input type="text" id="stdAlmocoFim" value="12:00" placeholder="12:00" maxlength="5">
+                </div>
+                <div class="input-box">
+                    <label for="stdSaida">Saída</label>
+                    <input type="text" id="stdSaida" value="16:00" placeholder="16:00" maxlength="5">
+                </div>
+            </div>
+
+            <!-- Botões de Ação em Massa -->
+            <div class="automation-panel">
+                <div class="automation-header">
+                    <span><span class="material-icons">bolt</span> Aplicar na Tabela do Mês:</span>
+                </div>
+                <div class="automation-buttons">
+                    <button type="button" id="btnPreencherUteis" class="btn-auto primary-auto" title="Preenche automaticamente de segunda a sexta do mês">
+                        <span class="material-icons">event_available</span> ⚡ Preencher Dias Úteis (Seg a Sex)
+                    </button>
+                    <button type="button" id="btnPreencherTodos" class="btn-auto" title="Preenche todos os 31 dias com o horário padrão">
+                        <span class="material-icons">calendar_month</span> Preencher Todos os 31 Dias
+                    </button>
+                    <button type="button" id="btnLimparFds" class="btn-auto" title="Limpa qualquer dado em sábados e domingos">
+                        <span class="material-icons">weekend</span> Limpar Finais de Semana
+                    </button>
+                    <button type="button" id="btnLimparTudo" class="btn-auto danger-auto" title="Limpar todos os campos da tabela">
+                        <span class="material-icons">delete_sweep</span> Limpar Todos os Horários
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Tabela Completa dos 31 Dias -->
+        <section class="table-card">
+            <div class="card-title-bar" style="padding: 16px 20px 0;">
+                <h3><span class="material-icons">table_chart</span> 3. Grade de Horários e Justificativa (Dias 01 a 31)</h3>
+                <span class="badge-info">Edite qualquer dia individualmente</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="ponto-table" id="pontoTable">
+                    <thead>
+                        <tr>
+                            <th class="col-dia">Data</th>
+                            <th>Horário de Entrada</th>
+                            <th>Local Entrada / Obs</th>
+                            <th>Almoço (Saída)</th>
+                            <th>Almoço (Retorno)</th>
+                            <th>Horário de Saída</th>
+                            <th>Local Saída / Obs</th>
+                            <th style="width: 140px;">Ações Rápidas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="diasTableBody">
+                        <!-- Gerado dinamicamente pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Barra de Ações e Exportação -->
+        <section class="actions-footer-bar">
+            <div class="actions-status">
+                <span>Dias úteis no mês: <strong id="totalDiasUteis">22</strong></span>
+                <span>&bull;</span>
+                <span>Dias preenchidos: <strong id="totalPreenchidos">0</strong></span>
+            </div>
+
+            <div class="actions-buttons">
+                <button type="button" id="btnPreverPdf" class="btn-main secondary" title="Visualizar o PDF preenchido na tela">
+                    <span class="material-icons">visibility</span> Pré-visualizar
+                </button>
+                <button type="button" id="btnImprimirPdf" class="btn-main secondary" title="Imprimir diretamente a folha de ponto preenchida">
+                    <span class="material-icons">print</span> Imprimir
+                </button>
+                <button type="button" id="btnGerarPdf" class="btn-main primary" title="Gerar e fazer download do PDF oficial preenchido">
+                    <span class="material-icons">download</span> Gerar & Baixar PDF Preenchido
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal de Pré-visualização do PDF -->
+    <div id="modalPreviewPdf" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"><span class="material-icons">picture_as_pdf</span> Pré-visualização da Folha de Ponto</h3>
+                <button type="button" id="fecharModalPdf" class="modal-close-btn" aria-label="Fechar">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdfPreviewFrame" title="Visualizador do PDF da Folha de Ponto"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnImprimirModal" class="btn-main secondary">
+                    <span class="material-icons">print</span> Imprimir
+                </button>
+                <button type="button" id="btnDownloadModal" class="btn-main primary">
+                    <span class="material-icons">download</span> Baixar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de Notificação -->
+    <div id="toastMsg" class="toast-msg"></div>
+
+    <!-- Rodapé Institucional -->
+    <footer class="app-footer">
+        <p><strong>ESF CDI 2</strong> &mdash; Estratégia Saúde da Família | Sete Lagoas - MG</p>
+        <p>Departamento de Gestão de Pessoas &bull; Coordenação da Atenção Primária &bull; Secretaria Municipal de Saúde</p>
+    </footer>
+
+</body>
+</html>

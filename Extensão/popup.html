@@ -6,20 +6,20 @@
   <style>
     * { box-sizing: border-box; }
     body {
-      width: 330px;
+      width: 350px;
       margin: 0;
-      padding: 18px;
+      padding: 16px;
       color: #20343a;
       background: #f3f7f8;
       font: 14px Arial, sans-serif;
     }
-    h1 { margin: 0 0 5px; color: #086b76; font-size: 18px; }
-    .hint { margin: 0 0 16px; color: #53676d; line-height: 1.4; }
-    .actions { display: grid; gap: 8px; }
+    h1 { margin: 0 0 4px; color: #086b76; font-size: 17px; }
+    .hint { margin: 0 0 14px; color: #53676d; font-size: 12px; line-height: 1.4; }
+    .actions { display: grid; gap: 7px; }
     button {
       width: 100%;
-      min-height: 42px;
-      padding: 10px 12px;
+      min-height: 40px;
+      padding: 9px 12px;
       color: #fff;
       background: #087e8b;
       border: 0;
@@ -30,26 +30,52 @@
     }
     button:hover:not(:disabled) { background: #06636d; }
     button:disabled { cursor: wait; opacity: .65; }
-    .declaration-settings {
-      margin-top: 15px;
-      padding-top: 13px;
+
+    .section-box {
+      margin-top: 14px;
+      padding-top: 12px;
       border-top: 1px solid #cbd9dc;
     }
-    .declaration-settings h2 { margin: 0 0 10px; font-size: 14px; }
-    .time-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-    label { display: grid; gap: 5px; color: #354b51; font-size: 12px; font-weight: 700; }
-    input { width: 100%; min-height: 36px; padding: 6px 8px; border: 1px solid #aebfc4; border-radius: 4px; background: white; font: inherit; }
-    #status { min-height: 32px; margin-top: 12px; color: #354b51; font-size: 12px; line-height: 1.4; }
+    .section-box h2 { margin: 0 0 8px; font-size: 13px; color: #086b76; }
+    
+    .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .tool-btn {
+      background: #fff;
+      color: #086b76;
+      border: 1px solid #aebfc4;
+      font-size: 12px;
+      font-weight: 600;
+      min-height: 36px;
+      padding: 6px 8px;
+    }
+    .tool-btn:hover:not(:disabled) { background: #e6f4f4; color: #06636d; }
+
+    .time-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+    label { display: grid; gap: 4px; color: #354b51; font-size: 11px; font-weight: 700; }
+    input { width: 100%; min-height: 32px; padding: 5px 8px; border: 1px solid #aebfc4; border-radius: 4px; background: white; font: inherit; font-size: 12px; }
+    #status { min-height: 28px; margin-top: 10px; color: #354b51; font-size: 12px; line-height: 1.35; }
   </style>
 </head>
 <body>
   <h1>Documentos do G-MUS</h1>
-  <p class="hint">Abra a ficha do paciente e escolha o documento para gerar.</p>
+  <p class="hint">Abra a ficha do paciente no G-MUS e escolha uma ação.</p>
+  
   <div class="actions">
-    <button type="button" data-action="capa">Criar capa de prontuário</button>
-    <button type="button" data-action="gestante">Criar capa gestante</button>
+    <button type="button" data-action="capa">📄 Gerar Capa de Prontuário (PDF)</button>
+    <button type="button" data-action="gestante">🤰 Gerar Capa Gestante (PDF)</button>
   </div>
-  <section class="declaration-settings" aria-labelledby="declarationTitle">
+
+  <section class="section-box">
+    <h2>Integração com Ferramentas do Posto</h2>
+    <div class="tools-grid">
+      <button type="button" class="tool-btn" data-tool="receita">💊 Receituário</button>
+      <button type="button" class="tool-btn" data-tool="encaminhamento">📤 Encaminhamento</button>
+      <button type="button" class="tool-btn" data-tool="whatsapp">💬 Lembrete Whats</button>
+      <button type="button" class="tool-btn" data-tool="puericultura">👶 Puericultura</button>
+    </div>
+  </section>
+
+  <section class="section-box" aria-labelledby="declarationTitle">
     <h2 id="declarationTitle">Declaração de comparecimento</h2>
     <label for="dataComparecimento">Data do comparecimento
       <input id="dataComparecimento" type="date" required>
@@ -62,8 +88,9 @@
         <input id="horaFim" type="time">
       </label>
     </div>
-    <button type="button" data-action="declaracao" style="margin-top: 12px">Criar declaração preenchida</button>
+    <button type="button" data-action="declaracao" style="margin-top: 10px">Criar declaração preenchida</button>
   </section>
+
   <div id="status" role="status" aria-live="polite"></div>
 
   <script src="pdf-lib.min.js"></script>

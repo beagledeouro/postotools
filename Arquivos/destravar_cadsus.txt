@@ -1,0 +1,63 @@
+================================================================================
+SCRIPT/FAVORITO: DESTRAVAR CARREGAMENTO INFINITO DO CADSUS WEB
+Data: 28/10/2026
+================================================================================
+
+1. CÓDIGO DO FAVORITO (BOOKMARKLET):
+Copie exatamente a linha abaixo (uma linha só) e cole no campo de URL/Endereço do favorito:
+
+javascript:(function(){try{if(typeof window.usuario==='undefined'){window.usuario={cpf:(document.getElementById('cpf')&&document.getElementById('cpf').value)||''};}if(typeof bloqueioLiberar==='function'){bloqueioLiberar();}else if(window.jQuery&&jQuery.unblockUI){jQuery.unblockUI();}if(window.jQuery){jQuery('.conteudo, .rodape').show();if(typeof calcGrauDeQualidade==='function'){try{calcGrauDeQualidade();}catch(e){}}jQuery('#nome').focus();}var t=document.createElement('div');t.textContent='✅ CADSUS Desbloqueado com sucesso!';t.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#2e7d32;color:#fff;padding:12px 24px;border-radius:8px;font-size:16px;font-weight:bold;font-family:sans-serif;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:9999999;transition:opacity 0.5s;';document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},500);},3000);}catch(err){alert('Erro ao destravar: '+err.message);}})();
+
+
+================================================================================
+2. COMO INSTALAR NO PC (Google Chrome / Microsoft Edge / Firefox)
+================================================================================
+1. No seu navegador, pressione as teclas: Ctrl + Shift + O (ou clique com o botão
+   direito na barra de favoritos superior e selecione "Adicionar favorito" / "Adicionar página").
+2. Defina os campos:
+   - Nome: Destravar CADSUS
+   - URL: [Cole o código javascript:(function()... acima]
+3. Clique em Salvar.
+4. COMO USAR: Ao abrir o paciente no CADSUS e a tela ficar presa no "Aguarde, carregando interface",
+   basta dar 1 clique nesse favorito na barra superior. A tela desbloqueia na mesma hora.
+
+
+================================================================================
+3. COMO INSTALAR NO TABLET / CELULAR (Google Chrome no Android)
+================================================================================
+1. No Chrome do tablet, abra qualquer página (ex: google.com).
+2. Toque nos três pontinhos (⋮) no canto superior direito e toque no ícone da Estrela (★).
+3. Toque em "Editar" (ou abra Menu ⋮ > Favoritos > Editar na página favoritada).
+4. Altere os campos:
+   - Nome: Destravar CADSUS
+   - URL: Apague o endereço e cole o código javascript:(function()... acima.
+5. Volte para salvar.
+6. COMO USAR NO TABLET: Quando a página do CADSUS travar, toque na barra de endereços do Chrome,
+   digite "Destravar" e clique no favorito com a estrela que aparecer na lista de sugestões.
+
+
+================================================================================
+4. CÓDIGO ABERTO / EXPLICADO (O QUE O SCRIPT FAZ):
+================================================================================
+// 1. Corrige a falta da variável global que o DATASUS esqueceu de declarar:
+if (typeof window.usuario === 'undefined') {
+    window.usuario = { cpf: (document.getElementById('cpf') && document.getElementById('cpf').value) || '' };
+}
+
+// 2. Remove o overlay de bloqueio cinza (jQuery BlockUI):
+if (typeof bloqueioLiberar === 'function') {
+    bloqueioLiberar();
+} else if (window.jQuery && jQuery.unblockUI) {
+    jQuery.unblockUI();
+}
+
+// 3. Força a exibição dos formulários preenchidos e foca no primeiro campo:
+if (window.jQuery) {
+    jQuery('.conteudo, .rodape').show();
+    if (typeof calcGrauDeQualidade === 'function') {
+        try { calcGrauDeQualidade(); } catch(e) {}
+    }
+    jQuery('#nome').focus();
+}
+
+// 4. Mostra uma notificação visual verde confirmando o desbloqueio.

@@ -1,114 +1,4 @@
-const bancoMedicamentosPadrao = [
-    // Anti-hipertensivos e Cardiovasculares
-    { nome: "Losartana Potássica", concentracao: "50 mg", forma: "Comprimido" },
-    { nome: "Hidroclorotiazida", concentracao: "25 mg", forma: "Comprimido" },
-    { nome: "Enalapril (Maleato)", concentracao: "10 mg", forma: "Comprimido" },
-    { nome: "Enalapril (Maleato)", concentracao: "20 mg", forma: "Comprimido" },
-    { nome: "Captopril", concentracao: "25 mg", forma: "Comprimido" },
-    { nome: "Anlodipino (Besilato)", concentracao: "5 mg", forma: "Comprimido" },
-    { nome: "Anlodipino (Besilato)", concentracao: "10 mg", forma: "Comprimido" },
-    { nome: "Atenolol", concentracao: "50 mg", forma: "Comprimido" },
-    { nome: "Propranolol (Cloridrato)", concentracao: "40 mg", forma: "Comprimido" },
-    { nome: "Furosemida", concentracao: "40 mg", forma: "Comprimido" },
-    { nome: "Espironolactona", concentracao: "25 mg", forma: "Comprimido" },
-    { nome: "Metildopa", concentracao: "250 mg", forma: "Comprimido" },
-    { nome: "Ácido Acetilsalicílico (AAS)", concentracao: "100 mg", forma: "Comprimido" },
-    { nome: "Sinvastatina", concentracao: "20 mg", forma: "Comprimido" },
-    { nome: "Sinvastatina", concentracao: "40 mg", forma: "Comprimido" },
-
-    // Hipoglicemiantes / Diabetes
-    { nome: "Metformina (Cloridrato)", concentracao: "850 mg", forma: "Comprimido" },
-    { nome: "Metformina (Cloridrato)", concentracao: "500 mg", forma: "Comprimido" },
-    { nome: "Gliclazida", concentracao: "30 mg", forma: "Comprimido Liberação Prolongada" },
-    { nome: "Glibenclamida", concentracao: "5 mg", forma: "Comprimido" },
-    { nome: "Insulina Humana NPH", concentracao: "100 UI/mL", forma: "Frasco-ampola ou Caneta" },
-    { nome: "Insulina Humana Regular", concentracao: "100 UI/mL", forma: "Frasco-ampola ou Caneta" },
-
-    // Analgésicos e Anti-inflamatórios
-    { nome: "Dipirona Monoidratada", concentracao: "500 mg/mL", forma: "Solução Gotas" },
-    { nome: "Dipirona Monoidratada", concentracao: "1 g", forma: "Comprimido" },
-    { nome: "Dipirona Monoidratada", concentracao: "500 mg", forma: "Comprimido" },
-    { nome: "Paracetamol", concentracao: "750 mg", forma: "Comprimido" },
-    { nome: "Paracetamol", concentracao: "200 mg/mL", forma: "Solução Gotas" },
-    { nome: "Ibuprofeno", concentracao: "600 mg", forma: "Comprimido" },
-    { nome: "Ibuprofeno", concentracao: "50 mg/mL", forma: "Suspensão Gotas" },
-    { nome: "Diclofenaco de Sódio", concentracao: "50 mg", forma: "Comprimido" },
-    { nome: "Nimesulida", concentracao: "100 mg", forma: "Comprimido" },
-    { nome: "Cetoprofeno", concentracao: "100 mg", forma: "Comprimido" },
-    { nome: "Meloxicam", concentracao: "15 mg", forma: "Comprimido" },
-
-    // Antibióticos
-    { nome: "Amoxicilina", concentracao: "500 mg", forma: "Cápsula" },
-    { nome: "Amoxicilina", concentracao: "250 mg/5mL", forma: "Suspensão Oral" },
-    { nome: "Amoxicilina + Clavulanato de Potássio", concentracao: "875/125 mg", forma: "Comprimido" },
-    { nome: "Amoxicilina + Clavulanato de Potássio", concentracao: "250+62,5 mg/5mL", forma: "Suspensão Oral" },
-    { nome: "Azitromicina", concentracao: "500 mg", forma: "Comprimido" },
-    { nome: "Azitromicina", concentracao: "200 mg/5mL", forma: "Suspensão Oral" },
-    { nome: "Cefalexina", concentracao: "500 mg", forma: "Drágea/Comprimido" },
-    { nome: "Cefalexina", concentracao: "250 mg/5mL", forma: "Suspensão Oral" },
-    { nome: "Ciprofloxacino", concentracao: "500 mg", forma: "Comprimido" },
-    { nome: "Sulfametoxazol + Trimetoprima", concentracao: "400+80 mg", forma: "Comprimido" },
-    { nome: "Sulfametoxazol + Trimetoprima", concentracao: "200+40 mg/5mL", forma: "Suspensão Oral" },
-    { nome: "Metronidazol", concentracao: "250 mg ou 400 mg", forma: "Comprimido" },
-    { nome: "Metronidazol Gel Vaginal", concentracao: "100 mg/g", forma: "Tubo c/ aplicadores" },
-    { nome: "Nitrofurantoína", concentracao: "100 mg", forma: "Cápsula" },
-    { nome: "Doxiciclina", concentracao: "100 mg", forma: "Comprimido" },
-
-    // Respiratório e Antialérgicos
-    { nome: "Loratadina", concentracao: "10 mg", forma: "Comprimido" },
-    { nome: "Loratadina", concentracao: "1 mg/mL", forma: "Xarope" },
-    { nome: "Dexclorfeniramina (Maleato)", concentracao: "2 mg", forma: "Comprimido" },
-    { nome: "Dexclorfeniramina (Maleato)", concentracao: "0,4 mg/mL", forma: "Xarope" },
-    { nome: "Prednisona", concentracao: "20 mg", forma: "Comprimido" },
-    { nome: "Prednisona", concentracao: "5 mg", forma: "Comprimido" },
-    { nome: "Prednisolona", concentracao: "3 mg/mL", forma: "Solução Oral" },
-    { nome: "Dexametasona", concentracao: "4 mg", forma: "Comprimido" },
-    { nome: "Dexametasona", concentracao: "0,1 mg/mL", forma: "Elixir" },
-    { nome: "Salbutamol (Sulfato)", concentracao: "100 mcg/dose", forma: "Spray Inalatório" },
-    { nome: "Beclometasona (Dipropionato)", concentracao: "250 mcg/dose", forma: "Spray Inalatório" },
-    { nome: "Ambroxol (Cloridrato)", concentracao: "30 mg/5mL", forma: "Xarope Adulto" },
-    { nome: "Ambroxol (Cloridrato)", concentracao: "15 mg/5mL", forma: "Xarope Pediátrico" },
-
-    // Gastrointestinais
-    { nome: "Omeprazol", concentracao: "20 mg", forma: "Cápsula" },
-    { nome: "Metoclopramida (Cloridrato)", concentracao: "10 mg", forma: "Comprimido" },
-    { nome: "Metoclopramida (Cloridrato)", concentracao: "4 mg/mL", forma: "Solução Gotas" },
-    { nome: "Ondansetrona", concentracao: "4 mg ou 8 mg", forma: "Comprimido" },
-    { nome: "Simeticona", concentracao: "40 mg", forma: "Comprimido" },
-    { nome: "Simeticona", concentracao: "75 mg/mL", forma: "Emulsão Gotas" },
-    { nome: "Soro de Reidratação Oral (SRO)", concentracao: "Pó", forma: "Envelope" },
-    { nome: "Hidróxido de Alumínio", concentracao: "61,5 mg/mL", forma: "Suspensão Oral" },
-
-    // Tópicos, Pomadas e Oftálmicos
-    { nome: "Neomicina + Bacitracina", concentracao: "5 mg + 250 UI/g", forma: "Pomada Tópica" },
-    { nome: "Cetoconazol", concentracao: "20 mg/g (2%)", forma: "Creme Tópico" },
-    { nome: "Miconazol (Nitrato)", concentracao: "2%", forma: "Creme Tópico ou Vaginal" },
-    { nome: "Nistatina", concentracao: "100.000 UI/mL", forma: "Suspensão Oral" },
-    { nome: "Nistatina", concentracao: "25.000 UI/g", forma: "Creme Vaginal" },
-    { nome: "Sulfadiazina de Prata", concentracao: "10 mg/g (1%)", forma: "Creme Tópico" },
-    { nome: "Permetrina", concentracao: "1% ou 5%", forma: "Loção" },
-    { nome: "Dexametasona Creme", concentracao: "1 mg/g (0,1%)", forma: "Bisnaga" },
-    { nome: "Tobramicina Colírio", concentracao: "0,3%", forma: "Frasco Gotas" },
-    { nome: "Carmelose Sódica", concentracao: "0,5%", forma: "Colírio Lubrificante" },
-
-    // Suplementos e Vitaminas
-    { nome: "Sulfato Ferroso", concentracao: "40 mg Fe elementar", forma: "Comprimido" },
-    { nome: "Sulfato Ferroso", concentracao: "25 mg Fe/mL (125mg/mL)", forma: "Solução Gotas" },
-    { nome: "Ácido Fólico", concentracao: "5 mg", forma: "Comprimido" },
-    { nome: "Carbonato de Cálcio + Vitamina D", concentracao: "500 mg + 400 UI", forma: "Comprimido" },
-    { nome: "Complexo B", concentracao: "Polivitamínico", forma: "Drágea" },
-
-    // Psicotrópicos Comuns na Atenção Básica (Controle Especial)
-    { nome: "Fluoxetina (Cloridrato)", concentracao: "20 mg", forma: "Cápsula" },
-    { nome: "Sertralina (Cloridrato)", concentracao: "50 mg", forma: "Comprimido" },
-    { nome: "Amitriptilina (Cloridrato)", concentracao: "25 mg", forma: "Comprimido" },
-    { nome: "Nortriptilina (Cloridrato)", concentracao: "25 mg", forma: "Cápsula" },
-    { nome: "Clonazepam", concentracao: "2 mg", forma: "Comprimido" },
-    { nome: "Clonazepam", concentracao: "2,5 mg/mL", forma: "Solução Gotas" },
-    { nome: "Diazepam", concentracao: "5 mg ou 10 mg", forma: "Comprimido" },
-    { nome: "Carbamazepina", concentracao: "200 mg", forma: "Comprimido" },
-    { nome: "Haloperidol", concentracao: "1 mg ou 5 mg", forma: "Comprimido" }
-];
+const bancoMedicamentosPadrao = [];
 
 let receitaAtual = [];
 let modeloAtualSelecionado = null;
@@ -326,17 +216,11 @@ function gerarConteudoVia(numeroVia, isControleEspecial) {
     logo.alt = 'Sete Lagoas Prefeitura e Secretaria Municipal da Saúde';
 
     const tituloReceita = isControleEspecial ? 'Receituário de Controle Especial' : 'Receituário Médico';
-    const subtituloVia = isControleEspecial
-        ? (numeroVia === 1 ? '1ª VIA: RETENÇÃO DA FARMÁCIA / DROGARIA' : '2ª VIA: ORIENTAÇÃO DO PACIENTE')
-        : (numeroVia === 1 ? '1ª VIA — PACIENTE' : '2ª VIA — FARMÁCIA / PRONTUÁRIO');
 
     const unidadeMarca = elemento('div', null, 'print-branding-unit');
     unidadeMarca.append(elemento('strong', 'ESF CDI 2'), elemento('span', tituloReceita));
     marca.append(logo, unidadeMarca);
     cabecalho.append(marca);
-
-    const subtituloEl = elemento('div', subtituloVia, 'via-subtitle');
-    cabecalho.appendChild(subtituloEl);
 
     // Identificação do Paciente
     const paciente = elemento('div', null, 'print-patient');

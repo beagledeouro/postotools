@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+ENV/
+
+# Credenciais e Sessões do G-MUS / Google Drive (LGPD & Segurança)
+.gmus_session.json
+gdrive_service_account.json
+gdrive_credentials.json
+gdrive_token.json
+.gmus_checkpoint_pacientes.csv
+
+# Planilhas locais
+planilhas_geradas/
+planilhas_drive_local/
+*.tmp.xlsx
+*.tmp.csv
